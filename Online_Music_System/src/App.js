@@ -6,7 +6,9 @@ import Home from './Componets/Home';
 import SignIn from './Componets/Account/SignIn';
 import ResetPassword from './Componets/Account/ResetPassword';
 import storage from './Componets/fire';
-import Play from './Componets/Play';
+import Play from './Componets/ManageSong/Play';
+import ManageSong from './Componets/ManageSong/ManageSong';
+import EditSong from './Componets/ManageSong/EditSong'
 
 function App() {
  
@@ -19,6 +21,10 @@ function App() {
         <Route path="/signup" element={<SignUP />} />
         <Route path="/song" element={<Play/>} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
+        <Route path="/managesong" element={<ManageSong />} />
+        <Route path="/editsong" element={<EditSong />} />
+
+
       </Routes>
 
     </UserProvider>
