@@ -48,12 +48,12 @@ export default function ManageSong() {
             <Navbar />
             <div className="container">
                 <Link to="/song" >
-                    <button className="btn btn-primary  my-4 mx-auto">+ Add New Song</button>
+                    <button className="btn btn-success  my-4 mx-auto">+ Add New Song</button>
                 </Link>
                 <hr />
 
 
-                <table className="table table-hover ">
+                <table className="table table-dark table-hover text-light">
                     <thead>
                         <tr>
                             <th>Song Name</th>

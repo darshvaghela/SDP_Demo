@@ -14,7 +14,15 @@ const SongSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    link : {
+    songLink : {
+        type: String,
+        require: true
+    },
+    imageLink : {
+        type: String,
+        require: true
+    },
+    genre : {
         type: String,
         require: true
     }

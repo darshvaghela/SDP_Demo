@@ -1,0 +1,32 @@
+/* 
+.makeStyles-root-34 {
+    background-color:red;
+} */
+
+
+
+
+.body{
+    background-color:black;
+}
+
+.rhap_container, rhap_container*:focus{
+    outline:none;
+}
+.rhap_main-controls ,rhap_main-controls*:focus{
+ outline:none;
+}
+
+.rhap_container{
+    background-color:#212529 !important;
+}
+.rhap_time, rhap_main-controls{
+    color:white !important;
+}
+.rhap_progress-filled{
+    background-color:white;
+}
+.rhap_download-progress{
+    background-color:#5e5353;
+}
+

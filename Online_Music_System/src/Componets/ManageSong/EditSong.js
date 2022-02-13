@@ -6,11 +6,9 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation,
 
 export default function EditSong() {
     const location = useLocation();
-    // const [song, setSong] = useState("");
-    // const [progress, setProgress] = useState(0)
-    // const [data, setData] = useState({ songName: "", movieName: "", singerName: "" });
+    const genres = ["","Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
     const id = location.state.id;
-    const [song, setSong] = useState({id:"", songName: "", movieName: "", singerName: "" })
+    const [song, setSong] = useState({id:"", songName: "", movieName: "", singerName: "",genre:"" })
     
     
     const fetchById = async () => {
@@ -25,7 +23,8 @@ export default function EditSong() {
             id:id,
             songName:response.song.songName, 
             movieName:response.song.movieName, 
-            singerName:response.song.singerName
+            singerName:response.song.singerName,
+            genre:response.song.genre
         })
         return response;
     }
@@ -50,12 +49,12 @@ export default function EditSong() {
     }
     
     return (
-        <div>
+        <div className="text-light">
             <Navbar />
             <div className="container my-4" >
                 <h2>Edit Song</h2>
                 <hr />
-                <h1>{id}</h1>
+                {/* <h1>{song.genre}</h1> */}
                 <div className="mb-3 row my-4">
                     <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Song Name</label>
                     <div className="col-sm-10">
@@ -74,9 +73,22 @@ export default function EditSong() {
                         <input type="text" name="singerName" className="form-control w-50" value={song.singerName} onChange={handleOnChange} aria-label="singerName" aria-describedby="basic-addon1" />
                     </div>
                 </div>
+                <div className="mb-3 row">
+                    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Genre</label>
+                    <div className="col-sm-10">
 
+                        <select className="form-select w-50" name="genre" value={song.genre} onChange={handleOnChange} aria-label="Default select example">
+                            {genres.map(s => {
+
+                                return (
+                                    <option value={s.genre} >{s}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                </div>
                 <Link to="/managesong" >
-                    <button type="button" className="btn btn-dark  mb-4 mx-auto" onClick={editSong} >Edit</button>
+                    <button type="button" className="btn btn-success  mb-4 mx-auto" onClick={editSong} >Edit</button>
                 </Link>
             </div>
         </div>

@@ -7,8 +7,11 @@ import SignIn from './Componets/Account/SignIn';
 import ResetPassword from './Componets/Account/ResetPassword';
 import storage from './Componets/fire';
 import Play from './Componets/ManageSong/Play';
+import AddDetails from './Componets/ManageSong/AddDetails';
 import ManageSong from './Componets/ManageSong/ManageSong';
 import EditSong from './Componets/ManageSong/EditSong'
+import Player from './Componets/Player';
+import SongForGenre from './Componets/SongForGenre'
 
 function App() {
  
@@ -20,11 +23,12 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUP />} />
         <Route path="/song" element={<Play/>} />
+       {/* ? <Route path="/adddetails" element={<AddDetails/>} /> */}
         <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route path="/managesong" element={<ManageSong />} />
         <Route path="/editsong" element={<EditSong />} />
-
-
+        <Route path="/player" element={<Player />} />
+        <Route path="/songs" element={<SongForGenre />} />
       </Routes>
 
     </UserProvider>

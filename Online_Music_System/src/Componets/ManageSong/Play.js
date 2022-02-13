@@ -5,14 +5,17 @@ import Navbar from '../Navbar';
 import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react-router-dom';
 
 
-
 export default function Play() {
+    let u
     const [song, setSong] = useState("");
-    const [url, setUrl] = useState([]);
-    const [data, setData] = useState({ songName: "", movieName: "", singerName: "", link: "" });
-
-    const [progress, setProgress] = useState(0)
-    const upload = () => {
+    const [image, setImage] = useState("");
+    const [songurl, setSongurl] = useState("");
+    const [imageurl, setImageurl] = useState("");
+    const [data, setData] = useState({ songName: "", movieName: "", singerName: "", songLink: "", imageLink:"", genre: "" });
+    const genres = ["","Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const [songprogress, setSongprogress] = useState(0)
+    const [imageprogress, setImageprogress] = useState(0)
+    const songUpload = () => {
         const uploadTask = storage.ref(`/songs/${song.name}`).put(song);
         uploadTask.on(
             "state_changed",
@@ -20,7 +23,7 @@ export default function Play() {
                 const progress = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
-                setProgress(progress);
+                setSongprogress(progress);
             },
             error => {
                 console.log(error);
@@ -31,18 +34,53 @@ export default function Play() {
                     .child(song.name)
                     .getDownloadURL()
                     .then(url => {
-                        setUrl(url);
-                        setData({ link: url })
-                        console.log(url)
+                        // setSongurl(url);
+                        setData({...data,songLink:url});
+                        console.log(url);
+                        console.log(data);
+                        
+                    });
+            }
+        );
+        }
+
+    const imageUplaod = () => {
+        const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+        uploadTask.on(
+            "state_changed",
+            snapshot => {
+                const progress = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                setImageprogress(progress);
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref("images")
+                    .child(image.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        // setImageurl(url);
+                        setData({...data, imageLink: url })
+                        console.log(url);
+                        console.log(data);
+                      
                     });
             }
         );
 
     }
     const handleOnChange = (event) => {
+        // console.log(event.target.value)
         setData({ ...data, [event.target.name]: event.target.value });
+
     }
+
     const addSong = async () => {
+        console.log(data);
         let response = await fetch("http://localhost:4099/song/addsong",
             {
                 method: 'POST',
@@ -50,14 +88,20 @@ export default function Play() {
                 body: JSON.stringify(data)
             }
         );
+
         response = await response.json();
         if (response.success) {
-            setData({ songName: "", movieName: "", singerName: "", link: "" })
-            setProgress(0)
+            setData({ songName: "", movieName: "", singerName: "", songLink: "", imageLink: "", genre: "" })
+            setSongprogress(0)
+            setImageprogress(0)
             setSong([0])
+            setImage([0])
         }
         return response;
     }
+    // console.log("first");
+    // console.log(data.songLink);
+    // console.log("second");
 
 
     return (
@@ -65,19 +109,43 @@ export default function Play() {
 
         <div>
             <Navbar />
-            <div className="container my-4" >
+            <div className="container my-4 text-light" >
                 <h2>Add Song</h2>
                 <hr />
-                <div className="row">
-                    <div className="col-5">
-                        <input type="file" className="form-control" onChange={(e) => { setSong(e.target.files[0]) }} />
+
+
+                <div className="mb-3 row my-4">
+                    <label className="col-sm-2 col-form-label">Add Song</label>
+                    <div className="col-sm-10">
+                        <input type="file" className="form-control w-50" onChange={(e) => { setSong(e.target.files[0]) }} />
                     </div>
-                    <div className="col-4 mx-2">
-                        <ProgressBar completed={progress} bgColor="blue" className="w-75" />
+                </div>
+
+                <div className="mb-3 row my-4">
+                    <div className="col-sm-6">
+                        <ProgressBar completed={songprogress} bgColor="blue" className="w-100" />
                     </div>
-                    <div className="col-2">
-                        <button className="btn btn-primary rounded" onClick={upload}>Upload</button>
+                    <div className="col-sm-6">
+                        <button className="btn btn-primary rounded" onClick={songUpload}>Upload</button>
                     </div>
+
+                </div>
+
+                <div className="mb-3 row my-4">
+                    <label className="col-sm-2 col-form-label">Add Poster</label>
+                    <div className="col-sm-10">
+                        <input type="file" className="form-control w-50" onChange={(e) => { setImage(e.target.files[0]) }} />
+                    </div>
+                </div>
+
+                <div className="mb-3 row my-4">
+                    <div className="col-sm-6">
+                        <ProgressBar completed={imageprogress} bgColor="blue" className="w-100" />
+                    </div>
+                    <div className="col-sm-6">
+                        <button className="btn btn-primary rounded" onClick={imageUplaod}>Upload</button>
+                    </div>
+
                 </div>
 
                 <div className="mb-3 row my-4">
@@ -98,14 +166,30 @@ export default function Play() {
                         <input type="text" name="singerName" className="form-control w-50" value={data.singerName} onChange={handleOnChange} aria-label="singerName" aria-describedby="basic-addon1" />
                     </div>
                 </div>
+                <div className="mb-3 row">
+                    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Genre</label>
+                    <div className="col-sm-10">
+
+                        <select className="form-select w-50" name="genre" onChange={handleOnChange} aria-label="Default select example">
+                            {genres.map(s => {
+
+                                return (
+                                    <option value={s.genre}>{s}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                </div>
+
 
                 <Link to="/managesong" >
-                    <button type="button" className="btn btn-dark  mb-4 mx-auto" onClick={addSong}>Add</button>
+                    <button type="button" className="btn btn-success  mb-4 mx-auto" onClick={addSong}>Add</button>
                 </Link>
             </div>
 
 
 
+            {/* <h3>{data.songLink}</h3> */}
         </div>
 
 
