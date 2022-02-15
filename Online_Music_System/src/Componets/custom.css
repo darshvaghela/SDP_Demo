@@ -29,4 +29,13 @@
 .rhap_download-progress{
     background-color:#5e5353;
 }
+.hovereffect{
+    text-decoration: none;
+    color:grey;
+}
+.hovereffect:hover{
+    text-decoration:underline;
+    color:lightgray;
+    cursor:pointer
+}
 

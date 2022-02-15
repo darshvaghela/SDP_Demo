@@ -12,7 +12,7 @@ import ManageSong from './Componets/ManageSong/ManageSong';
 import EditSong from './Componets/ManageSong/EditSong'
 import Player from './Componets/Player';
 import SongForGenre from './Componets/SongForGenre'
-
+import Search from './Componets/Search'
 function App() {
  
   return (
@@ -29,6 +29,8 @@ function App() {
         <Route path="/editsong" element={<EditSong />} />
         <Route path="/player" element={<Player />} />
         <Route path="/songs" element={<SongForGenre />} />
+        <Route path="/search" element={<Search />} />
+
       </Routes>
 
     </UserProvider>

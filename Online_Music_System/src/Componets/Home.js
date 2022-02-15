@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Navbar from './Navbar'
 import './custom.css'
 import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react-router-dom';
-
-import Tip from './Tip Tip.jpg'
+import Sidebar  from './Sidebar';
 
 export default function Home() {
     const [songsByGenre, setSongsByGenre] = useState(new Map())
@@ -52,21 +51,13 @@ export default function Home() {
 
     return (
         <div>
-            <Navbar />
             <div className="container-fluid w-100">
                 <div className="row h-100">
                     <div className="col-2 p-0 h-100 position-fixed sidebar" style={{ "backgroundColor": "black" }}>
-                        <div className="container my-4">
-                            <div>
-                                <Link to="/" className="text-decoration-none text-light">Home</Link>
-                            </div>
-                            <div>
-                                <Link to="/managesong" className="text-decoration-none text-light"></Link>
-                            </div>
-                        </div>
-
+                       <Sidebar />
                     </div>
                     <div className="col-10 offset-2 p-0 h-100 ">
+                        <Navbar />
                         {
                             [...songsByGenre.keys()].map(g => {
                                 if (songsByGenre.get(g).length != 0)
@@ -74,8 +65,8 @@ export default function Home() {
                                         <>
                                             <div className="container">
                                                 <div className="d-flex justify-content-between align-items-center">
-                                                    <h3 className="mt-2">{g}</h3>
-                                                    <span onClick={() => navigateWithGenre(g)} className="text-decoration-none text-light">See All</span>
+                                                    <h3 className="my-3">{g}</h3>
+                                                    <span onClick={() => navigateWithGenre(g)} className="hovereffect">See All</span>
                                                 </div>
                                                 <div className="row row-cols-5 g-4">
                                                     {
