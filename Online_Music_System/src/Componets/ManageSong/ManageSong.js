@@ -6,7 +6,7 @@ export default function ManageSong() {
     const [song, setSong] = useState([])
     const [sname, setSname] = useState()
     const fetchSong = async () => {
-        let response = await fetch("http://localhost:4099/song/fetchallsong",
+        let response = await fetch(`http://localhost:4099/song/fetchallsongs/${"all"}`,
             {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
@@ -38,9 +38,18 @@ export default function ManageSong() {
     const nav = useNavigate();
 
     const navigate = (id) => {
-        nav('/editsong',{state:{id:id}})
+        nav('/editsong', { state: { id: id } })
     }
+
     useEffect(() => {
+        const account = JSON.parse(localStorage.getItem("account"))
+        if (!account) {
+
+            nav('/signin')
+        }
+        if (account && account.user.isAdmin === false) {
+            nav('/')
+        }
         fetchSong();
     }, [])
     return (
@@ -53,23 +62,25 @@ export default function ManageSong() {
                 <hr />
 
 
-                <table className="table table-dark table-hover text-light">
+                <table className="table table-dark table-hover text-muted">
                     <thead>
                         <tr>
-                            <th>Song Name</th>
-                            <th>Artist</th>
+                            <th className="text-light">#</th>
+                            <th className="text-light">Song Name</th>
+                            <th className="text-light">Artist</th>
                             <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
 
-                        {song.map(s => {
+                        {song.map((s, index) => {
 
                             return (
-                                <tr >
+                                <tr key={s._id}>
+                                    <td>{index + 1}</td>
                                     <td scope="row">{s.songName}</td>
-                                    <td  >{s.singerName}</td>
+                                    <td>{s.singerName}</td>
                                     <td><button className="btn btn-link link-danger text-decoration-none p-0 btn shadow-none" onClick={() => handleOnClick(s._id)} >Delete</button></td>
                                     <td><button className="btn btn-link link-success text-decoration-none p-0 btn shadow-none" onClick={() => navigate(s._id)} >Edit</button></td>
 
@@ -78,7 +89,6 @@ export default function ManageSong() {
                         })}
                     </tbody>
                 </table>
-                {sname}
             </div>
         </div>
     )

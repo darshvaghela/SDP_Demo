@@ -42,12 +42,12 @@ export default function SongforGenre() {
                         <Navbar/>
                         <div className="container">
                             <h3 className="my-4">{location.state.genre}</h3>
-                            <div className="row row-cols-5 g-4">
+                            <div className="row row-cols-6 g-4">
                                 {
                                     songs.map((s) => {
                                         return (
                                             <div className="col">
-                                                <div className="card bg-dark h-100" onClick={() => navigateWithId(s._id)}>
+                                                <div className="card h-100 mycard text-light" onClick={() => navigateWithId(s._id)}>
                                                     <img src={s.imageLink} className="card-img-top" />
                                                     <div className="card-footer h-25">
                                                         <p className="card-title">{s.songName}</p>

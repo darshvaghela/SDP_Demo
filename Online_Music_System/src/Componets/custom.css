@@ -39,3 +39,12 @@
     cursor:pointer
 }
 
+.mycard{
+    background-color:#2f352f55;
+}
+.mycard:hover{
+    background-color:#00000055;
+    cursor:pointer;
+    transform: scale(1.05,1.05);
+}
+

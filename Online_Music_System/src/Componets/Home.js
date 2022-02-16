@@ -24,7 +24,7 @@ export default function Home() {
                 var count = 0;
                 let t = []
                 for (let j = 0; j < response.songs.length; j++) {
-                    if (response.songs[j].genre == genres[i] && count < 5) {
+                    if (response.songs[j].genre == genres[i] && count < 6) {
                         t.push(response.songs[j])
                         count++
                     }
@@ -53,7 +53,7 @@ export default function Home() {
         <div>
             <div className="container-fluid w-100">
                 <div className="row h-100">
-                    <div className="col-2 p-0 h-100 position-fixed sidebar" style={{ "backgroundColor": "black" }}>
+                    <div className="col-2 p-0 h-100 position-fixed sidebar" style={{ backgroundColor: "black"}}>
                        <Sidebar />
                     </div>
                     <div className="col-10 offset-2 p-0 h-100 ">
@@ -66,17 +66,17 @@ export default function Home() {
                                             <div className="container">
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <h3 className="my-3">{g}</h3>
-                                                    <span onClick={() => navigateWithGenre(g)} className="hovereffect">See All</span>
+                                                    <span onClick={() => navigateWithGenre(g)} className="hovereffect" style={{letterSpacing:1}}>See All</span>
                                                 </div>
-                                                <div className="row row-cols-5 g-4">
+                                                <div className="row row-cols-6 g-4">
                                                     {
                                                         songsByGenre.get(g).map((s) => {
                                                             return (
                                                                 <div className="col">
-                                                                    <div className="card bg-dark h-100" onClick={() => navigateWithId(s._id)}>
+                                                                    <div className="card h-100 text-light mycard" onClick={() => navigateWithId(s._id)}>
                                                                         <img src={s.imageLink} className="card-img-top" />
                                                                         <div className="card-footer h-25">
-                                                                            <p className="card-title">{s.songName}</p>
+                                                                            <p className="card-title" >{s.songName}</p>
                                                                         </div>
                                                                     </div>
                                                                 </div>

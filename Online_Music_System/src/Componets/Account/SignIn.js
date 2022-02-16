@@ -19,7 +19,7 @@ export default function SignIn() {
             setError(response.error);
         }
         else {
-            localStorage.setItem("authtoken",response.authtoken);
+            localStorage.setItem("account",JSON.stringify({"token":response.authtoken,"user":response.user}));
             setUser({ email: "", password: "" });
             setError("");
             navigate("/");
