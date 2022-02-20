@@ -30,8 +30,8 @@ export default function SongforGenre() {
     }, [])
 
     return (
-        <div>
-            <div className="container-fluid w-100">
+        <>
+            <div className="container-fluid w-100 bg-dark vh-100">
 
                 <div className="row h-100">
                     <div className="col-2 p-0 h-100 position-fixed sidebar" style={{ "backgroundColor": "black" }}>
@@ -41,8 +41,8 @@ export default function SongforGenre() {
                     <div className="col-10 offset-2 p-0 h-100 ">
                         <Navbar/>
                         <div className="container">
-                            <h3 className="my-4">{location.state.genre}</h3>
-                            <div className="row row-cols-6 g-4">
+                            <h3 className="my-4 text-light">{location.state.genre}</h3>
+                            <div className="row row-cols-6 g-4 mb-3">
                                 {
                                     songs.map((s) => {
                                         return (
@@ -62,7 +62,7 @@ export default function SongforGenre() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
 
     )
 }

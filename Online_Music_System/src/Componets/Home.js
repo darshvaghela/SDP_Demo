@@ -50,8 +50,8 @@ export default function Home() {
     }, [])
 
     return (
-        <div>
-            <div className="container-fluid w-100">
+        <>
+            <div className="container-fluid w-100 bg-dark">
                 <div className="row h-100">
                     <div className="col-2 p-0 h-100 position-fixed sidebar" style={{ backgroundColor: "black"}}>
                        <Sidebar />
@@ -65,10 +65,10 @@ export default function Home() {
                                         <>
                                             <div className="container">
                                                 <div className="d-flex justify-content-between align-items-center">
-                                                    <h3 className="my-3">{g}</h3>
+                                                    <h3 className="my-3 text-light">{g}</h3>
                                                     <span onClick={() => navigateWithGenre(g)} className="hovereffect" style={{letterSpacing:1}}>See All</span>
                                                 </div>
-                                                <div className="row row-cols-6 g-4">
+                                                <div className="row row-cols-6 g-4 mb-3">
                                                     {
                                                         songsByGenre.get(g).map((s) => {
                                                             return (
@@ -94,6 +94,6 @@ export default function Home() {
 
 
             </div>
-        </div>
+        </>
     )
 }

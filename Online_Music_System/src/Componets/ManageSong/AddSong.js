@@ -5,7 +5,7 @@ import Navbar from '../Navbar';
 import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react-router-dom';
 
 
-export default function Play() {
+export default function AddSong() {
     let u
     const [song, setSong] = useState("");
     const [image, setImage] = useState("");
@@ -109,7 +109,7 @@ export default function Play() {
 
         <div>
             <Navbar />
-            <div className="container my-4 text-light" >
+            <div className="container my-4" >
                 <h2>Add Song</h2>
                 <hr />
 

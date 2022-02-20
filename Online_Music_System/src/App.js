@@ -6,13 +6,13 @@ import Home from './Componets/Home';
 import SignIn from './Componets/Account/SignIn';
 import ResetPassword from './Componets/Account/ResetPassword';
 import storage from './Componets/fire';
-import Play from './Componets/ManageSong/Play';
-import AddDetails from './Componets/ManageSong/AddDetails';
-import ManageSong from './Componets/ManageSong/ManageSong';
+import AddSong from './Componets/ManageSong/AddSong';
+import Admin from './Componets/Admin';
 import EditSong from './Componets/ManageSong/EditSong'
 import Player from './Componets/Player';
 import SongForGenre from './Componets/SongForGenre'
 import Search from './Componets/Search'
+import CreatePlaylist from './Componets/ManagePlaylist/CreatePlaylist'
 function App() {
  
   return (
@@ -22,14 +22,17 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUP />} />
-        <Route path="/song" element={<Play/>} />
-       {/* ? <Route path="/adddetails" element={<AddDetails/>} /> */}
-        <Route path="/ResetPassword" element={<ResetPassword />} />
-        <Route path="/managesong" element={<ManageSong />} />
+        <Route path="/addsong" element={<AddSong/>} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/admin/songs" element={<Admin />} />
+        <Route path="/admin/playlists" element={<Admin />} />
+
         <Route path="/editsong" element={<EditSong />} />
         <Route path="/player" element={<Player />} />
         <Route path="/songs" element={<SongForGenre />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/createplaylist" element={<CreatePlaylist />} />
+
 
       </Routes>
 

@@ -32,9 +32,9 @@ export default function Player() {
     }, [])
 
 
-    return <div className="bg-dark text-light">
+    return <div className="bg-dark text-light vh-100">
         <Navbar />
-        <div className="container my-4">
+        <div className="container my-4 bg-dark">
             <div className="d-flex">
                 <div className="mx-4">
                     <img src={song.imageLink} className="rounded" />
@@ -54,6 +54,7 @@ export default function Player() {
                 autoPlay
                 src={url}
                 onPlay={e => console.log("onPlay")}
+                customAdditionalControls={[]}
             />
 
         </div>

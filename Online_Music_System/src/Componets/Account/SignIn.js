@@ -26,8 +26,9 @@ export default function SignIn() {
         }
     }
     return (
+        <div className="bg-dark">
 
-        <div className="container h-100 d-flex justify-content-center flex-column w-25 border p-3 align-item-center" style={{ marginTop: "180px" }}>
+        <div className="container h-100 d-flex justify-content-center flex-column w-25 border p-3 align-item-center bg-dark" style={{ marginTop: "180px" }}>
             <h1 className="text-center mb-4">Sign In</h1>
             <h5 style={{color: 'red',textAlign : 'center'}}>{error}</h5>
             <div className="input-group mb-4">
@@ -39,12 +40,13 @@ export default function SignIn() {
 
 
             <button type="button" className="btn btn-primary w-100 mb-4 mx-auto" onClick={handleOnClick}>Sign In</button>
-            <Link to='/ResetPassword'className="text-center">Forgot Password?</Link>
+            <Link to='/resetpassword'className="text-center">Forgot Password?</Link>
             <hr/>
             <Link to="/signup" >
                 <button className="btn btn-success w-100 mb-4 mx-auto">Create new account?</button>
             </Link>
         </div>
 
+        </div>
     )
 }
