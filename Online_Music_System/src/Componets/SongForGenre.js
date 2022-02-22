@@ -3,12 +3,15 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation,
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 
-export default function SongforGenre() {
-
+export default function SongforGenre(props) {
+    
     const nav = useNavigate();
     const location = useLocation();
+    const account = JSON.parse(localStorage.getItem("account"))
 
     const [songs, setSongs] = useState([]);
+    const [title, setTitle] = useState("");
+
     const fetchSongsByGenre = async () => {
         let response = await fetch(`http://localhost:4099/song/fetchallsongs/${location.state.genre}`,
             {
@@ -17,7 +20,27 @@ export default function SongforGenre() {
             }
         );
         response = await response.json();
-        setSongs(response.songs)
+        if (response.success) {
+            setSongs(response.songs)
+            setTitle(location.state.genre)
+        }
+    }
+
+
+
+    const fetchSongsByPlaylist = async () => {
+        let response = await fetch(`http://localhost:4099/playlist/fetchadminplaylists/${location.state.playlistId}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json'}
+            }
+        );
+        response = await response.json();
+        console.log(response);
+        if (response.success) {
+            setSongs(response.playlists[0].songs)
+            setTitle(response.playlists[0].playlistName)
+        }
     }
 
     const navigateWithId = (id) => {
@@ -26,22 +49,25 @@ export default function SongforGenre() {
 
 
     useEffect(() => {
-        fetchSongsByGenre();
+        if (location.state.genre)
+            fetchSongsByGenre();
+        else
+            fetchSongsByPlaylist();
     }, [])
 
     return (
         <>
-            <div className="container-fluid w-100 bg-dark vh-100">
+            <div className="container-fluid w-100 bg-dark min-vh-100">
 
                 <div className="row h-100">
                     <div className="col-2 p-0 h-100 position-fixed sidebar" style={{ "backgroundColor": "black" }}>
-                        <Sidebar />
+                        <Sidebar currentSong={props.currentSong}/>
 
                     </div>
                     <div className="col-10 offset-2 p-0 h-100 ">
-                        <Navbar/>
-                        <div className="container">
-                            <h3 className="my-4 text-light">{location.state.genre}</h3>
+                        <Navbar />
+                        <div className="container" style={props.currentSong ? {height : '81vh', overflow : 'auto'} : {height : '92.48vh', overflow: 'auto'} }>
+                            <h3 className="my-3 text-light">{title}</h3>
                             <div className="row row-cols-6 g-4 mb-3">
                                 {
                                     songs.map((s) => {

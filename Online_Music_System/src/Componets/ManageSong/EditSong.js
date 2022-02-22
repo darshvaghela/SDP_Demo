@@ -6,11 +6,13 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation,
 
 export default function EditSong() {
     const location = useLocation();
-    const genres = ["","Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const nav = useNavigate();
+
+    const genres = ["", "Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
     const id = location.state.id;
-    const [song, setSong] = useState({id:"", songName: "", movieName: "", singerName: "",genre:"" })
-    
-    
+    const [song, setSong] = useState({ id: "", songName: "", movieName: "", singerName: "", genre: "" })
+
+
     const fetchById = async () => {
         let response = await fetch(`http://localhost:4099/song/fetchbyid/${id}`,
             {
@@ -19,25 +21,30 @@ export default function EditSong() {
             }
         );
         response = await response.json();
-        setSong({ 
-            id:id,
-            songName:response.song.songName, 
-            movieName:response.song.movieName, 
-            singerName:response.song.singerName,
-            genre:response.song.genre
+        setSong({
+            id: id,
+            songName: response.song.songName,
+            movieName: response.song.movieName,
+            singerName: response.song.singerName,
+            genre: response.song.genre
         })
         return response;
     }
-    const editSong = async () => {
+    const handleOnClick = async () => {
+        const account = JSON.parse(localStorage.getItem("account"))
+
         let response = await fetch("http://localhost:4099/song/editsong",
             {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'token': account.token },
                 body: JSON.stringify(song)
             }
         );
         response = await response.json();
-        return response;
+        if (response.success) {
+            window.alert("Edited Successfully")
+            nav('/admin/songs')
+        }
     }
 
     useEffect(() => {
@@ -45,11 +52,11 @@ export default function EditSong() {
     }, [])
     const handleOnChange = (event) => {
         setSong({ ...song, [event.target.name]: event.target.value });
-        
+
     }
-    
+
     return (
-        <div className="text-light">
+        <div>
             <Navbar />
             <div className="container my-4" >
                 <h2>Edit Song</h2>
@@ -87,9 +94,7 @@ export default function EditSong() {
                         </select>
                     </div>
                 </div>
-                <Link to="/managesong" >
-                    <button type="button" className="btn btn-success  mb-4 mx-auto" onClick={editSong} >Edit</button>
-                </Link>
+                <button type="button" className="btn btn-success  mb-4 mx-auto" onClick={handleOnClick} >Edit</button>
             </div>
         </div>
     )

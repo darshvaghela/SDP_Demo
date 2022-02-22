@@ -4,11 +4,12 @@ import { BrowserRouter as Router, useLocation, useNavigate, Switch, Route, Link 
 import Playlists from './ManagePlaylist/Playlists';
 import Songs from './ManageSong/Songs';
 
-export default function Admin() {
+export default function Admin(props) {
     const nav = useNavigate();
     const location = useLocation();
-
+    props.setCurrentSong(null);
     useEffect(() => {
+        
         const account = JSON.parse(localStorage.getItem("account"))
         if (!account) {
 

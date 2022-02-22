@@ -6,7 +6,6 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react
 
 
 export default function AddSong() {
-    let u
     const [song, setSong] = useState("");
     const [image, setImage] = useState("");
     const [songurl, setSongurl] = useState("");
@@ -22,7 +21,7 @@ export default function AddSong() {
             snapshot => {
                 const progress = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
+                    );
                 setSongprogress(progress);
             },
             error => {
@@ -30,8 +29,8 @@ export default function AddSong() {
             },
             () => {
                 storage
-                    .ref("songs")
-                    .child(song.name)
+                .ref("songs")
+                .child(song.name)
                     .getDownloadURL()
                     .then(url => {
                         // setSongurl(url);
@@ -41,11 +40,11 @@ export default function AddSong() {
                         
                     });
             }
-        );
+            );
         }
 
-    const imageUplaod = () => {
-        const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+        const imageUplaod = () => {
+            const uploadTask = storage.ref(`/images/${image.name}`).put(image);
         uploadTask.on(
             "state_changed",
             snapshot => {
@@ -59,32 +58,32 @@ export default function AddSong() {
             },
             () => {
                 storage
-                    .ref("images")
-                    .child(image.name)
-                    .getDownloadURL()
-                    .then(url => {
-                        // setImageurl(url);
+                .ref("images")
+                .child(image.name)
+                .getDownloadURL()
+                .then(url => {
+                    // setImageurl(url);
                         setData({...data, imageLink: url })
                         console.log(url);
                         console.log(data);
                       
                     });
+                }
+                );
+                
             }
-        );
-
-    }
-    const handleOnChange = (event) => {
-        // console.log(event.target.value)
-        setData({ ...data, [event.target.name]: event.target.value });
-
-    }
-
-    const addSong = async () => {
-        console.log(data);
-        let response = await fetch("http://localhost:4099/song/addsong",
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+            const handleOnChange = (event) => {
+                // console.log(event.target.value)
+                setData({ ...data, [event.target.name]: event.target.value });
+                
+            }
+            
+            const addSong = async () => {
+                const account = JSON.parse(localStorage.getItem("account"))
+                let response = await fetch("http://localhost:4099/song/addsong",
+                {
+                    method: 'POST',
+                headers: { 'Content-Type': 'application/json' ,'token':account.token},
                 body: JSON.stringify(data)
             }
         );

@@ -13,7 +13,7 @@ export default function Navbar(props) {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-dark" style={{ "backgroundColor": "#151313" }}>
+            <nav className="navbar navbar-expand-lg navbar-dark w-100" style={{ "backgroundColor": "#151313" }}>
                 <div className="container">
                     <ul className="navbar-nav ms-auto">
                         {props.btns}

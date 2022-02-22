@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PlaylistSchema = new mongoose.Schema({
+const UserPlaylistSchema = new mongoose.Schema({
 
     playlistName : {
         type: String,
@@ -15,4 +15,4 @@ const PlaylistSchema = new mongoose.Schema({
         ref: 'songs'
     }]
 })
-module.exports = mongoose.model('playlists',PlaylistSchema);
+module.exports = mongoose.model('userPlaylists',UserPlaylistSchema);

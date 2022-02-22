@@ -10,6 +10,8 @@ app.use(express.json());
 
 app.use('/auth',require('./routes/auth'));
 app.use('/song',require('./routes/song'));
+app.use('/playlist',require('./routes/playlist'));
+
 
 app.listen(port, () => {
     console.log(`Chat app listening at http://localhost:${port}`)

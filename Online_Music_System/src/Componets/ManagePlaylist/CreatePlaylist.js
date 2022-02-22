@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../Navbar'
-import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, useNavigate, useLocation, Switch, Route, Link } from 'react-router-dom';
 import '../admin.css'
 
 
 export default function CreatePlaylist() {
-    const [songsByGenre, setSongsByGenre] = useState(new Map())
-    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
-    const [selectedSongs, setSelectedSongs] = useState([])
-    const [playlistName, setPlayListName] = useState("")
+    const location = useLocation();
+    const nav = useNavigate();
     const account = JSON.parse(localStorage.getItem("account"))
+    
+    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const [songsByGenre, setSongsByGenre] = useState(new Map())
+    
+    const [selectedSongs, setSelectedSongs] = useState([])
+    const [playlistName, setPlaylistName] = useState("")
+    
+    const [playlist, setPlaylist] = useState(location.state ? location.state.playlist : null)
+    // console.log(location.state.playlist);
 
 
     const fetchSongs = async () => {
@@ -36,7 +43,6 @@ export default function CreatePlaylist() {
                 temp.set(genres[i], t);
             }
             setSongsByGenre(temp)
-            console.log(temp)
         }
         return response;
     }
@@ -44,7 +50,7 @@ export default function CreatePlaylist() {
 
     const handleOnChange = (event) => {
         if (event.target.name === 'playlistName')
-            setPlayListName(event.target.value)
+            setPlaylistName(event.target.value)
         else {
             const temp = selectedSongs.find(e => e === event.target.value)
             if (!temp)
@@ -57,28 +63,51 @@ export default function CreatePlaylist() {
 
     }
     const handleOnClick = async () => {
-        console.log(playlistName)
-        console.log(selectedSongs)
-        let response = await fetch(`http://localhost:4099/song/createplaylist`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'token': account.token },
-                body: JSON.stringify({ playlistName, selectedSongs })
+        if (playlist) {
+            let response = await fetch(`http://localhost:4099/playlist/editplaylist`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'token': account.token },
+                    body: JSON.stringify({ playlistId: playlist._id, playlistName, selectedSongs })
+                }
+            );
+            response = await response.json();
+            if (response.success) {
+                window.alert("playlist edited")
             }
-        );
-        response = await response.json();
-        if (response.success) {
-            window.alert("playlist created")
         }
+        else {
+
+            let response = await fetch(`http://localhost:4099/playlist/createplaylistbyadmin`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'token': account.token },
+                    body: JSON.stringify({ playlistName, selectedSongs })
+                }
+            );
+            response = await response.json();
+            if (response.success) {
+                window.alert("playlist created")
+            }
+        }
+        nav('/admin/playlists');
     }
     useEffect(() => {
         fetchSongs();
+        if (playlist) {
+            setPlaylistName(playlist.playlistName);
+            let songs = [];
+            for (let i of playlist.songs) {
+                songs.push(i._id)
+            }
+            setSelectedSongs(songs);
+        }
     }, [])
     return (
         <>
             <Navbar />
             <div className="container my-4">
-                <h2> Create Playlist </h2>
+                <h2> {playlist ? 'Edit Playlist' : 'Create Playlist'}</h2>
                 <hr className="text-primary" />
                 <div className="mb-3 d-flex align-items-center my-4">
                     <label htmlFor="playlist-name" className="fw-bold me-4">Playlist Name</label>
@@ -118,7 +147,7 @@ export default function CreatePlaylist() {
                                                                             <td>{s.singerName}</td>
                                                                             <td>
                                                                                 <div className="form-check">
-                                                                                    <input className="form-check-input" type="checkbox" value={s._id} onChange={handleOnChange} />
+                                                                                    <input className="form-check-input" type="checkbox" defaultChecked={selectedSongs.includes(s._id)} value={s._id} onChange={handleOnChange} />
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -135,7 +164,9 @@ export default function CreatePlaylist() {
                         })
                     }
                 </div>
-                <button type="button" className="btn btn-primary my-3" onClick={handleOnClick}>Create PlayList</button>
+                <button type="button" className="btn btn-primary my-3" onClick={handleOnClick}>
+                    {playlist ? 'Edit' : 'Create'}
+                </button>
             </div>
         </>
     )

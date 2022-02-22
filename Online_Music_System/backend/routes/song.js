@@ -1,16 +1,16 @@
 const express = require('express')
 const authenticateuser = require('../middlewares/authenticateuser')
 const Song = require('../models/Song')
-const Playlist =require('../models/Playlist')
+const Playlist = require('../models/AdminPlaylist')
 const router = express.Router()
 
 
-router.post('/addsong', async (req, res) => {
+router.post('/addsong',authenticateuser, async (req, res) => {
     // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
     //     return res.status(400).json({ success: false, error: errors.array() });
     // }
-    
+
 
     try {
         let song = await Song.findOne({ songName: req.body.songName });
@@ -25,11 +25,11 @@ router.post('/addsong', async (req, res) => {
     }
 })
 router.get('/fetchallsongs/:genre', async (req, res) => {
-    const genre= req.params.genre;
+    const genre = req.params.genre;
     try {
         let songs = null;
-        if(genre !== "all")
-            songs = await Song.find({genre: genre})
+        if (genre !== "all")
+            songs = await Song.find({ genre: genre })
         else
             songs = await Song.find();
 
@@ -40,7 +40,7 @@ router.get('/fetchallsongs/:genre', async (req, res) => {
     }
 
 })
-router.delete('/deletesong', async (req, res) => {
+router.delete('/deletesong',authenticateuser, async (req, res) => {
 
     Song.deleteOne({ _id: req.body.id }).then((result) => {
         res.status(200).json(result)
@@ -59,21 +59,16 @@ router.get(`/fetchbyid/:id`, async (req, res) => {
     }
 
 })
-router.post('/editsong', async (req, res) => {
-
-    await Song.updateOne({ _id: req.body.id }, { songName: req.body.songName, movieName: req.body.movieName, singerName: req.body.singerName, genre: req.body.genre });
-    res.send({ success: true });
-
-})
-router.post('/createplaylist',authenticateuser,async (req, res) => {
+router.post('/editsong',authenticateuser, async (req, res) => {
     try {
-        let playlist = await Playlist.create({ playlistName:req.body.playlistName,user:req.user.id,songs:req.body.selectedSongs });
-        res.send({ success: true })
+        await Song.updateOne({ _id: req.body.id }, { songName: req.body.songName, movieName: req.body.movieName, singerName: req.body.singerName, genre: req.body.genre });
+        res.send({ success: true });
     }
     catch (error) {
         res.status(500).send("Internal Serval Error");
-    }
 
+    }
 })
+
 
 module.exports = router;

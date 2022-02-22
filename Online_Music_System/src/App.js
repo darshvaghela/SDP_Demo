@@ -11,33 +11,49 @@ import Admin from './Componets/Admin';
 import EditSong from './Componets/ManageSong/EditSong'
 import Player from './Componets/Player';
 import SongForGenre from './Componets/SongForGenre'
-import Search from './Componets/Search'
+// import Search from './Componets/Search'
 import CreatePlaylist from './Componets/ManagePlaylist/CreatePlaylist'
-function App() {
- 
+
+import AudioPlayer from 'react-h5-audio-player';
+
+
+export default function App() {
+  const [currentSong, setCurrentSong] = useState(null);
+
   return (
-    
-    <UserProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUP />} />
-        <Route path="/addsong" element={<AddSong/>} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/admin/songs" element={<Admin />} />
-        <Route path="/admin/playlists" element={<Admin />} />
+    <>
+      <div className="h-100">
+        <UserProvider>
+          <Routes>
+            <Route path="/admin/addsong" element={<AddSong />} />
+            <Route path="/admin/songs" element={<Admin setCurrentSong={setCurrentSong} />} />
+            <Route path="/admin/playlists" element={<Admin setCurrentSong={setCurrentSong} />} />
+            <Route path="/admin/editsong" element={<EditSong />} />
+            <Route path="/admin/createplaylist" element={<CreatePlaylist />} />
 
-        <Route path="/editsong" element={<EditSong />} />
-        <Route path="/player" element={<Player />} />
-        <Route path="/songs" element={<SongForGenre />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/createplaylist" element={<CreatePlaylist />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUP />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+
+            <Route path="/" element={<Home currentSong={currentSong} />} />
+            <Route path="/player" element={<Player currentSong={currentSong} setCurrentSong={setCurrentSong} />} />
+            <Route path="/songs" element={<SongForGenre currentSong={currentSong} />} />
+            {/* <Route path="/search" element={<Search />} /> */}
 
 
-      </Routes>
-
-    </UserProvider>
+          </Routes>
+          <div style={{ position: 'fixed', width: '100%', bottom: '0' }}>
+            {currentSong &&
+              <AudioPlayer
+                autoPlay
+                src={currentSong.songLink}
+                onPlay={e => console.log("onPlay")}
+              />
+            }
+          </div>
+        </UserProvider>
+      </div>
+    </>
   );
 }
 
-export default App;

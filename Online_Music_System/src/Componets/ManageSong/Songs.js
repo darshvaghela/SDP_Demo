@@ -4,6 +4,7 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react
 export default function Songs() {
     const nav = useNavigate();
     const [songsByGenre, setSongsByGenre] = useState(new Map())
+    const [songs,setSongs] = useState([])
     const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
     const fetchSongs = async () => {
         let response = await fetch(`http://localhost:4099/song/fetchallsongs/${"all"}`,
@@ -16,6 +17,7 @@ export default function Songs() {
         response = await response.json();
 
         if (response.success) {
+            setSongs(response.songs)
             let temp = new Map()
             for (let i = 0; i < genres.length; i++) {
                 var count = 0;
@@ -29,25 +31,29 @@ export default function Songs() {
                 temp.set(genres[i], t);
             }
             setSongsByGenre(temp)
-            console.log(temp)
         }
         return response;
     }
-    const handleDeleteClick = async (id) => {
 
-        let response = await fetch("http://localhost:4099/song/deletesong",
+    const handleDeleteClick = async (id) => {
+        const account = JSON.parse(localStorage.getItem("account"))
+        const song = songs.find(s => s._id === id);
+        if(window.confirm(`Are you sure you want to delete "${song.songName}"?`)){
+
+            let response = await fetch("http://localhost:4099/song/deletesong",
             {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'token':account.token},
                 body: JSON.stringify({ id })
             }
-        );
-        response = await response.json();
-        fetchSongs();
+            );
+            response = await response.json();
+            fetchSongs();
+        }
     }
 
     const handleEditClick = (id) => {
-        nav('/editsong', { state: { id: id } })
+        nav('/admin/editsong', { state: { id: id } })
     }
 
     useEffect(() => {
@@ -66,8 +72,8 @@ export default function Songs() {
             <div className="container">
                 <h2 className="my-2">Songs</h2>
                 <hr className="text-primary" />
-                <Link to="/addsong" >
-                    <button className="btn btn-success  my-4 mx-auto">+ Add New Song</button>
+                <Link to="/admin/addsong" >
+                    <button className="btn btn-success  my-2 mx-auto">+ Add New Song</button>
                 </Link>
                 {
                     [...songsByGenre.keys()].map(g => {
@@ -86,7 +92,7 @@ export default function Songs() {
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Song Name</th>
+                                                            <th>Song</th>
                                                             <th>Artist</th>
                                                             <th></th>
                                                             <th></th>
@@ -98,7 +104,14 @@ export default function Songs() {
                                                                 return (
                                                                     <tr key={s._id}>
                                                                         <td>{index + 1}</td>
-                                                                        <td scope="row">{s.songName}</td>
+                                                                        <td>
+                                                                            {s.songName}
+                                                                            {
+                                                                                (s.movieName != "AlbumSong") ?
+                                                                                    <span className="">&nbsp;(From "{s.movieName}")</span> : <span></span>
+
+                                                                            }
+                                                                        </td>
                                                                         <td>{s.singerName}</td>
                                                                         <td><button className="btn btn-link link-danger text-decoration-none p-0 btn shadow-none" onClick={() => handleDeleteClick(s._id)}>Delete</button></td>
                                                                         <td><button className="btn btn-link link-success text-decoration-none p-0 btn shadow-none" onClick={() => handleEditClick(s._id)}>Edit</button></td>
