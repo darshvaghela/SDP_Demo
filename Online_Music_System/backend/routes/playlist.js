@@ -2,6 +2,8 @@ const express = require('express')
 const authenticateuser = require('../middlewares/authenticateuser')
 const Song = require('../models/Song')
 const AdminPlaylist = require('../models/AdminPlaylist')
+const UserPlaylist = require('../models/UserPlaylist')
+
 const router = express.Router()
 
 router.post('/createplaylistbyadmin', authenticateuser, async (req, res) => {
@@ -14,6 +16,18 @@ router.post('/createplaylistbyadmin', authenticateuser, async (req, res) => {
     }
 
 })
+
+router.post('/createplaylistbyuser', authenticateuser, async (req, res) => {
+    try {
+        let playlist = await UserPlaylist.create({ playlistName: req.body.playlistName, user: req.user.id, songs: [req.body.songId] });
+        res.send({ success: true })
+    }
+    catch (error) {
+        res.status(500).send("Internal Serval Error");
+    }
+
+})
+
 router.get('/fetchadminplaylists/:id',async (req, res) => {
     let id = req.params.id
 

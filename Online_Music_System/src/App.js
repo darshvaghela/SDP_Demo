@@ -13,6 +13,8 @@ import Player from './Componets/Player';
 import SongForGenre from './Componets/SongForGenre'
 // import Search from './Componets/Search'
 import CreatePlaylist from './Componets/ManagePlaylist/CreatePlaylist'
+import UserPlaylists from './Componets/UserPlaylists/UserPlaylists'
+import CreateUserPlaylists from './Componets/UserPlaylists/CreateUserPlaylists'
 
 import AudioPlayer from 'react-h5-audio-player';
 
@@ -39,6 +41,10 @@ export default function App() {
             <Route path="/player" element={<Player currentSong={currentSong} setCurrentSong={setCurrentSong} />} />
             <Route path="/songs" element={<SongForGenre currentSong={currentSong} />} />
             {/* <Route path="/search" element={<Search />} /> */}
+            <Route path="/playlist" element={<UserPlaylists currentSong={currentSong}/>}/>
+            <Route path="/user/createplaylist" element={<CreateUserPlaylists currentSong={currentSong}/>}/>
+
+
 
 
           </Routes>
