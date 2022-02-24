@@ -3,6 +3,8 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation,
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar'
 import playlisticon from '../../static/playlist-icon.png';
+import EmptyPlaylist from '../../static/empty-playlist.jpg'
+
 
 
 export default function UserPlaylists(props) {
@@ -39,7 +41,11 @@ export default function UserPlaylists(props) {
     );
     response = await response.json();
     if (response.success) {
-      window.alert(id ? "playlist Added" : "Playlist Created")
+      window.alert(id ? "Song added successfully" : "Playlist Created")
+      fetchuserPlaylists()
+    }
+    else{
+      window.alert(response.error)
     }
   }
   const handleToggle = () => {
@@ -84,7 +90,7 @@ export default function UserPlaylists(props) {
                   <div>
                     <div className="form-group d-flex align-items-center mx-sm-3 mb-2">
                       <input type="text" className="form-control w-25 me-4" value={playlistName} onChange={handleOnChange} placeholder="Playlist Name" />
-                      <button type="submit" className="btn btn-success" onClick={handleOnClick}>Create</button>
+                      <button type="submit" className="btn btn-success" onClick={() => handleOnClick()}>Create</button>
                     </div>
                   </div>
                 }
@@ -99,7 +105,12 @@ export default function UserPlaylists(props) {
                       return (
                         <div className="col" key={p._id}>
                           <div className="card h-100 text-light mycard" onClick={() => handleOnClick(p._id)}>
+                            {p.songs[0] ?
                             <img src={p.songs[0].imageLink} className="card-img-top" />
+                                        :
+                                        <img src={EmptyPlaylist} className="card-img-top" />
+
+                                    }
                             <div className="card-footer h-25">
                               <p className="card-title" >{p.playlistName}</p>
                             </div>

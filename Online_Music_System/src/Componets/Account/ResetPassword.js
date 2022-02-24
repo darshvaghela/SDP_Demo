@@ -28,7 +28,7 @@ export default function ResetPassword() {
         }
     }
     return (
-        <div className="container h-100 d-flex justify-content-center flex-column w-25 border p-3 align-item-center" style={{ marginTop: "180px" }}>
+        <div className="container d-flex justify-content-center flex-column w-25 border p-3 align-item-center" style={{ marginTop: "180px" }}>
             <h1 className="text-center mb-4">Reset Password</h1>
             <h5 style={{color: 'red',textAlign : 'center'}}>{error}</h5>
             <div className="input-group mb-4">

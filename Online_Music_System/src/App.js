@@ -32,8 +32,8 @@ export default function App() {
             <Route path="/admin/editsong" element={<EditSong />} />
             <Route path="/admin/createplaylist" element={<CreatePlaylist />} />
 
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUP />} />
+            <Route path="/signin" element={<SignIn setCurrentSong={setCurrentSong}/>} />
+            <Route path="/signup" element={<SignUP setCurrentSong={setCurrentSong}/>} />
             <Route path="/resetpassword" element={<ResetPassword />} />
 
             <Route path="/" element={<Home currentSong={currentSong} />} />
@@ -42,13 +42,7 @@ export default function App() {
             {/* <Route path="/search" element={<Search />} /> */}
             <Route path="/createplaylist" element={<CreatePlaylists currentSong={currentSong}/>}/>
             <Route path="/yourplaylist" element={<YourPlaylists currentSong={currentSong}/>}/>
-            <Route path="/viewplaylist" element={<ViewPlaylist currentSong={currentSong}/>}/>
-
-
-
-
-
-
+            <Route path="/viewplaylist" element={<ViewPlaylist currentSong={currentSong} setCurrentSong={setCurrentSong}/>}/>
           </Routes>
           <div style={{ position: 'fixed', width: '100%', bottom: '0' }}>
             {currentSong &&

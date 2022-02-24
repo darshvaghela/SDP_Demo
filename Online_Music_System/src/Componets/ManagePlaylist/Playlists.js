@@ -26,7 +26,7 @@ export default function Playlists() {
         const playlist = playlists.find(p => p._id === id)
         if(window.confirm(`Are you sure you want to delete "${playlist.playlistName}"?`)) {
 
-            let response = await fetch("http://localhost:4099/playlist/deleteplaylist",
+            let response = await fetch("http://localhost:4099/playlist/deleteadminplaylist",
             {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },

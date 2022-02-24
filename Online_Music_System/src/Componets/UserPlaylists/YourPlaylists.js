@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation, useParams } from 'react-router-dom';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar'
+import EmptyPlaylist from '../../static/empty-playlist.jpg'
 
 export default function YourPlaylists(props) {
     const nav = useNavigate();
@@ -49,7 +50,12 @@ export default function YourPlaylists(props) {
                                             return (
                                                 <div className="col" key={p._id}>
                                                     <div className="card h-100 text-light mycard" onClick={() => handleOnClick(p)}>
+                                                        {p.songs[0] ?
                                                         <img src={p.songs[0].imageLink} className="card-img-top" />
+                                                        :
+                                                        <img src={EmptyPlaylist} className="card-img-top" />
+
+                                                    }
                                                         <div className="card-footer h-25">
                                                             <p className="card-title" >{p.playlistName}</p>
                                                         </div>

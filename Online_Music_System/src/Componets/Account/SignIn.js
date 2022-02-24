@@ -3,12 +3,12 @@ import UserContext from '../Contexts/user/UserContext';
 import { BrowserRouter as Router,useNavigate, Switch, Route, Link } from 'react-router-dom';
 
 
-export default function SignIn() {
+export default function SignIn(props) {
     const { signIn } = useContext(UserContext);
     const [user, setUser] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    props.setCurrentSong(null);
     const handleOnChange = (event) => {
         setUser({ ...user, [event.target.name]: event.target.value });
     }
@@ -26,9 +26,9 @@ export default function SignIn() {
         }
     }
     return (
-        <div className="bg-dark">
+        <div className="">
 
-        <div className="container h-100 d-flex justify-content-center flex-column w-25 border p-3 align-item-center bg-dark" style={{ marginTop: "180px" }}>
+        <div className="container h-100 d-flex justify-content-center flex-column w-25 border p-3 align-item-center" style={{ marginTop: "180px" }}>
             <h1 className="text-center mb-4">Sign In</h1>
             <h5 style={{color: 'red',textAlign : 'center'}}>{error}</h5>
             <div className="input-group mb-4">
