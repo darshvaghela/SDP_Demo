@@ -7,8 +7,8 @@ import Beatzz from '../static/Beatzz.jpg';
 
 export default function Sidebar(props) {
     const nav = useNavigate();
-    const handleOnClick = (id) => {
-        nav('/playlist',{ state: { id: id } })
+    const handleOnClick = () => {
+        nav('/createplaylist')
     }
     return (
         <div className="d-flex align-items-start flex-column h-100" style={{ zIndex: -1 }}>
@@ -32,7 +32,7 @@ export default function Sidebar(props) {
                         </Link>
                     </div>
                     <div className="mb-4">
-                        <Link to="/playlist" className="text-decoration-none text-light">
+                        <Link to="/yourplaylist" className="text-decoration-none text-light">
                             <i className="fa fa-music me-2" style={{ fontSize: "24px", color: "white" }}></i>
                             <span>Your Playlists</span>
                         </Link>
@@ -46,7 +46,7 @@ export default function Sidebar(props) {
                                 <span className="text-light mt-4">{props.currentSong.songName}</span>
                             </div>
                             <div title="Add to Playlist">
-                                <i style={{ fontSize: "22px",color: "white",cursor: "pointer" }} className="fa" onClick={()=>handleOnClick(props.currentSong._id)}>&#xf0fe;</i>
+                                <i style={{ fontSize: "22px",color: "white",cursor: "pointer" }} className="fa" onClick={handleOnClick}>&#xf0fe;</i>
                             </div>
 
                         </div>

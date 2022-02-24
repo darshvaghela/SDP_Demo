@@ -19,8 +19,14 @@ router.post('/createplaylistbyadmin', authenticateuser, async (req, res) => {
 
 router.post('/createplaylistbyuser', authenticateuser, async (req, res) => {
     try {
-        let playlist = await UserPlaylist.create({ playlistName: req.body.playlistName, user: req.user.id, songs: [req.body.songId] });
-        res.send({ success: true })
+        if (req.body.playlistId) {
+            await UserPlaylist.updateOne({ _id: req.body.playlistId }, {$push:{ songs: req.body.songId }})
+            res.send({ success: true })
+        }
+        else {
+            let playlist = await UserPlaylist.create({ playlistName: req.body.playlistName, user: req.user.id, songs: [req.body.songId] });
+            res.send({ success: true })
+        }
     }
     catch (error) {
         res.status(500).send("Internal Serval Error");
@@ -28,17 +34,27 @@ router.post('/createplaylistbyuser', authenticateuser, async (req, res) => {
 
 })
 
-router.get('/fetchadminplaylists/:id',async (req, res) => {
+router.get('/fetchadminplaylists/:id', async (req, res) => {
     let id = req.params.id
 
     try {
         let playlists;
-        if (id!=="all") {
+        if (id !== "all") {
             playlists = await AdminPlaylist.find({ _id: id }).populate('songs');
         }
         else {
             playlists = await AdminPlaylist.find().populate('songs');
         }
+        res.send({ success: true, playlists })
+    }
+    catch (error) {
+        res.status(500).send("Internal Serval Error");
+    }
+})
+router.get('/fetchuserplaylists', authenticateuser, async (req, res) => {
+
+    try {
+        let playlists = await UserPlaylist.find({ user: req.user.id }).populate('songs');
         res.send({ success: true, playlists })
     }
     catch (error) {
