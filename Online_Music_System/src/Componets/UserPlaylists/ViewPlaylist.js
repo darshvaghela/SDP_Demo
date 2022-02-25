@@ -16,17 +16,12 @@ export default function ViewPlaylist(props) {
 
         let response = await fetch("http://localhost:4099/playlist/removesong",
             {
-                method: 'DELETE',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ songId: id, playlistId: playlist._id })
             }
         );
         response = await response.json();
-        if (response.success) {
-            window.alert("Song Removed")
-            nav('/yourplaylist')
-
-        }
     }
 
     const handleOnClick= (s)=>{
@@ -102,9 +97,9 @@ export default function ViewPlaylist(props) {
                                             {
                                                 playlist.songs.map((s, index) => {
                                                     return (
-                                                        <tr key={s._id} onClick={() =>handleOnClick(s)}>
-                                                            <td>{index + 1}</td>
-                                                            <td>
+                                                        <tr key={s._id}>
+                                                            <td  onClick={() =>handleOnClick(s)}>{index + 1}</td>
+                                                            <td  onClick={() =>handleOnClick(s)} style={{width:"300px"}} >
                                                                 {s.songName}
                                                                 {
                                                                     (s.movieName !== "AlbumSong") ?
@@ -112,14 +107,14 @@ export default function ViewPlaylist(props) {
 
                                                                 }
                                                             </td>
-                                                            <td>{s.singerName}</td>
-                                                            <td>
+                                                            <td  onClick={() =>handleOnClick(s)} style={{width:"400px"}} className="">{s.singerName}</td>
+                                                            <td className="d-flex justify-content-center">
                                                                 <div className="btn-group dropend">
                                                                     <button className="btn btn-dark shadow-none" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <i className="fa fa-ellipsis-h" style={{ fontSize: "22px", color: "grey", cursor: "pointer" }}></i>
                                                                     </button>
                                                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                        <li><Link className="dropdown-item" to="/yourplaylist" onClick={() => handleRemoveClick(s._id)}>Remove from Playlist</Link></li>
+                                                                        <li><Link className="dropdown-item" to="/yourplaylist" onClick={() => handleRemoveClick(s._id)}>Remove</Link></li>
                                                                     </ul>
                                                                 </div>
                                                             </td>

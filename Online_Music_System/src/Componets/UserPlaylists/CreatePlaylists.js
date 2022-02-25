@@ -43,6 +43,7 @@ export default function UserPlaylists(props) {
     if (response.success) {
       window.alert(id ? "Song added successfully" : "Playlist Created")
       fetchuserPlaylists()
+      nav('/yourplaylist')
     }
     else{
       window.alert(response.error)

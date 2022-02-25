@@ -94,12 +94,15 @@ router.delete('/deleteuserplaylist', async (req, res) => {
     }).catch((err) => { console.warn(err) })
 })
 
-router.delete('/removesong', async (req, res) => {
-     await UserPlaylist.findOneAndUpdate({_id:req.body.playlistId},{$pull:{songs: req.body.songId}}).then((result) => {
-        let playlist = UserPlaylist.find({_id:req.body.playlistId})
+router.post('/removesong', async (req, res) => {
+    try{
+        await UserPlaylist.updateOne({_id:req.body.playlistId},{$pull:{songs: req.body.songId}})
+        let playlist = await UserPlaylist.find({_id:req.body.playlistId})
         res.send({ success: true, playlist})
-    }).catch((err) => { console.warn(err) })
-
+    }
+    catch{
+        ((err) => { console.warn(err) })
+    }
 })
 
 module.exports = router;

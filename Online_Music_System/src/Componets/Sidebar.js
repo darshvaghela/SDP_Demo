@@ -2,13 +2,16 @@ import React from 'react'
 import { BrowserRouter as Router, useNavigate, Switch, Route, Link } from 'react-router-dom';
 import Beatzz from '../static/Beatzz.jpg';
 
-
-
-
 export default function Sidebar(props) {
+    const account = JSON.parse(localStorage.getItem("account"))
     const nav = useNavigate();
     const handleOnClick = () => {
-        nav('/createplaylist')
+        if(account){
+            nav('/createplaylist')
+        }
+        else{
+            nav('/signin')
+        }
     }
     return (
         <div className="d-flex align-items-start flex-column h-100" style={{ zIndex: -1 }}>
