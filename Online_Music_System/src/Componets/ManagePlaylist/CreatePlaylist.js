@@ -165,7 +165,7 @@ export default function CreatePlaylist() {
                     }
                 </div>
                 <button type="button" className="btn btn-primary my-3" onClick={handleOnClick}>
-                    {playlist ? 'Edit' : 'Create'}
+                    {playlist ? 'Save' : 'Create'}
                 </button>
             </div>
         </>

@@ -37,7 +37,6 @@ export default function Home(props) {
             }
             setSongsByGenre(temp)
         }
-        return response;
     }
     const fetchPlaylists = async () => {
         let response = await fetch(`http://localhost:4099/playlist/fetchadminplaylists/${"all"}`,

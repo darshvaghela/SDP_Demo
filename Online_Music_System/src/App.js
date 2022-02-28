@@ -16,6 +16,7 @@ import CreatePlaylist from './Componets/ManagePlaylist/CreatePlaylist'
 import CreatePlaylists from './Componets/UserPlaylists/CreatePlaylists'
 import YourPlaylists from './Componets/UserPlaylists/YourPlaylists'
 import AudioPlayer from 'react-h5-audio-player';
+import Search from './Componets/Search';
 
 
 export default function App() {
@@ -32,17 +33,17 @@ export default function App() {
             <Route path="/admin/editsong" element={<EditSong />} />
             <Route path="/admin/createplaylist" element={<CreatePlaylist />} />
 
-            <Route path="/signin" element={<SignIn setCurrentSong={setCurrentSong}/>} />
-            <Route path="/signup" element={<SignUP setCurrentSong={setCurrentSong}/>} />
+            <Route path="/signin" element={<SignIn setCurrentSong={setCurrentSong} />} />
+            <Route path="/signup" element={<SignUP setCurrentSong={setCurrentSong} />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
 
             <Route path="/" element={<Home currentSong={currentSong} />} />
             <Route path="/player" element={<Player currentSong={currentSong} setCurrentSong={setCurrentSong} />} />
             <Route path="/songs" element={<SongForGenre currentSong={currentSong} />} />
-            {/* <Route path="/search" element={<Search />} /> */}
-            <Route path="/createplaylist" element={<CreatePlaylists currentSong={currentSong}/>}/>
-            <Route path="/yourplaylist" element={<YourPlaylists currentSong={currentSong}/>}/>
-            <Route path="/viewplaylist" element={<ViewPlaylist currentSong={currentSong} setCurrentSong={setCurrentSong}/>}/>
+            <Route path="/search" element={<Search currentSong={currentSong} setCurrentSong={setCurrentSong}/>} />
+            <Route path="/createplaylist" element={<CreatePlaylists currentSong={currentSong} />} />
+            <Route path="/yourplaylist" element={<YourPlaylists currentSong={currentSong} />} />
+            <Route path="/viewplaylist" element={<ViewPlaylist currentSong={currentSong} setCurrentSong={setCurrentSong} />} />
           </Routes>
           <div style={{ position: 'fixed', width: '100%', bottom: '0' }}>
             {currentSong &&

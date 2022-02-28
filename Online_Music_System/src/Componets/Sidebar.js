@@ -13,6 +13,11 @@ export default function Sidebar(props) {
             nav('/signin')
         }
     }
+
+    const navigateWithId = (id) => {
+        nav('/player', { state: { id: id } })
+    }
+
     return (
         <div className="d-flex align-items-start flex-column h-100" style={{ zIndex: -1 }}>
 
@@ -24,26 +29,26 @@ export default function Sidebar(props) {
                 <div className="my-3">
                     <div className="mb-3">
                         <Link to="/" className="text-decoration-none text-light">
-                            <i className="fa fa-home me-2" style={{ fontSize: "24px", color: "white" }}></i>
+                            <i className="fa fa-home me-3 my-2" style={{ fontSize: "20px", color: "white" }}></i>
                             <span>Home</span>
                         </Link>
                     </div>
                     <div className="mb-3">
                         <Link to="/search" className="text-decoration-none text-light">
-                            <i className="fa fa-search me-2" style={{ fontSize: "24px", color: "white" }}></i>
+                            <i className="fa fa-search me-3" style={{ fontSize: "20px", color: "white" }}></i>
                             <span>Search</span>
                         </Link>
                     </div>
                     <div className="mb-4">
                         <Link to="/yourplaylist" className="text-decoration-none text-light">
-                            <i className="fa fa-music me-2" style={{ fontSize: "24px", color: "white" }}></i>
+                            <i className="fa fa-music me-3" style={{ fontSize: "20px", color: "white" }}></i>
                             <span>Your Playlists</span>
                         </Link>
                     </div>
                 </div>
                 {props.currentSong &&
                     <div className="align-self-end">
-                        <img src={props.currentSong.imageLink} className="w-100 mt-4" />
+                        <img src={props.currentSong.imageLink} className="w-100 mt-4" style={{cursor: 'pointer'}} onClick={() => navigateWithId(props.currentSong._id)}/>
                         <div className="d-flex justify-content-between mt-2">
                             <div>
                                 <span className="text-light mt-4">{props.currentSong.songName}</span>

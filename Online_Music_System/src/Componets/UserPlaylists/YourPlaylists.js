@@ -21,22 +21,7 @@ export default function YourPlaylists(props) {
             setUserPlaylists(response.playlists)
         }
     }
-    const handleDeleteClick = async (id) => {
-        const playlist = userPlaylists.find(p => p._id === id)
-        if(window.confirm(`Are you sure you want to delete "${playlist.playlistName}"?`)) {
 
-            let response = await fetch("http://localhost:4099/playlist/deleteuserplaylist",
-            {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            }
-            );
-            response = await response.json();
-            fetchuserPlaylists();
-        }
-        
-    }
     const handleOnClick = (p) => {
         nav('/viewplaylist', { state: { playlist: p } })
     }
@@ -67,22 +52,14 @@ export default function YourPlaylists(props) {
                                                 <div className="col" key={p._id}>
                                                     <div className="card h-100 text-light mycard">
                                                         {p.songs[0] ?
-                                                        <img src={p.songs[0].imageLink} className="card-img-top" onClick={() => handleOnClick(p)}/>
-                                                        :
-                                                        <img src={EmptyPlaylist} className="card-img-top" onClick={() => handleOnClick(p)} />
+                                                            <img src={p.songs[0].imageLink} className="card-img-top" onClick={() => handleOnClick(p)} />
+                                                            :
+                                                            <img src={EmptyPlaylist} className="card-img-top" onClick={() => handleOnClick(p)} />
 
-                                                    }
+                                                        }
                                                         <div className="card-footer h-25 d-flex justify-content-between">
                                                             <p className="card-title" >{p.playlistName}</p>
-                                                            <div className="btn-group dropend">
-                                                                    <button className="btn btn-dark shadow-none" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i className="fa fa-ellipsis-h" style={{ fontSize: "15px", color: "grey", cursor: "pointer" }}></i>
-                                                                    </button>
-                                                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                        <li><Link className="dropdown-item" to="/yourplaylist" onClick={() => handleDeleteClick(p._id)}>Delete Playlist</Link></li>
-                                                                        <li><Link className="dropdown-item" to="/">Add Song</Link></li>
-                                                                    </ul>
-                                                                </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
