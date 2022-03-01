@@ -28,7 +28,16 @@ export default function Search(props) {
     setSearchResult(k => {
       if (event.target.value.length === 0)
         return []
-      return songs.filter(s => s.songName.toLowerCase().includes(event.target.value.toLowerCase()));
+      return songs.filter(s => {
+        if (s.songName.toLowerCase() === event.target.value.toLowerCase())
+          return true
+        else if (s.songName.toLowerCase().startsWith(event.target.value.toLowerCase()))
+          return true
+        else if (s.singerName.toLowerCase().includes(event.target.value.toLowerCase()))
+          return true
+        else
+          return false
+      });
     })
   }
 
@@ -50,25 +59,41 @@ export default function Search(props) {
           <Navbar search={<input onChange={handleSearch} value={query} className="form-control ms-2 h-75 my-auto rounded-pill" type="text" placeholder="Search" style={{ width: "500px" }} />} />
           <div style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }} >
             <div className="container">
-              <div className="d-flex align-items-center">
-                <h3 className="my-3 text-light">Top Results</h3>
-              </div>
-              <div className="row row-cols-6 g-4 mb-4">
-                {
-                  searchResult.map((s) => {
-                    return (
-                      <div className="col" key={s._id}>
-                        <div className="card h-100 text-light mycard" onClick={() => navigateWithId(s._id)}>
-                          <img src={s.imageLink} className="card-img-top" />
-                          <div className="card-footer h-25">
-                            <p className="card-title" >{s.songName}</p>
+              {searchResult.length > 0 &&
+                <div className="row mb-4">
+                  <div className="col-4">
+                    <h3 className="my-3 text-light">Top Results</h3>
+                    <div className="text-light p-3 search-top" style={{height:'215px'}} onClick={() => navigateWithId(searchResult[0]._id)}>
+                      <img src={searchResult[0].imageLink} className="w-25" />
+                      <div className="d-flex flex-column mt-4 text-light">
+                        <div className="mb-2">
+                          <span className="me-2" style={{ fontFamily: "Mochiy Pop P One, sans-serif", fontSize: "20px" }}>{searchResult[0].songName}</span>
+                          {
+                            (searchResult[0].movieName != "AlbumSong") ?
+                              `(From "${searchResult[0].movieName}")` : ""
+                          }
+                        </div>
+                        <small>{searchResult[0].singerName.split(',').join(' ● ')}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-8">
+                    <h3 className="my-3 text-light">Songs</h3>
+                    <div className="text-light d-flex flex-column" style={{height:'215px',overflowY: 'auto'}}>
+                      {searchResult.map(s =>
+                        <div className="d-flex align-items-center py-1 px-2 search-item" onClick={() => navigateWithId(s._id)}>
+                          <img src={s.imageLink} className="me-2" style={{ width: "40px", height: "40px" }} />
+                          <div className="d-flex flex-column">
+                            <span className="fw-bold">{s.songName}</span>
+                            <small className="text-muted">{s.singerName}</small>
                           </div>
                         </div>
-                      </div>
-                    )
-                  })
-                }
-              </div>
+                      )
+                      }
+                    </div>
+
+                  </div>
+                </div>}
             </div>
           </div>
         </div>

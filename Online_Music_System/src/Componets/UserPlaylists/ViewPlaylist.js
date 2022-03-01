@@ -66,9 +66,16 @@ export default function ViewPlaylist(props) {
                                     }
                                 </div>
                                 <div className="d-flex flex-column justify-content-end text-light">
-                                    <span className="display-5 mb-2 me-4" style={{ fontFamily: "Mochiy Pop P One, sans-serif" }}>{playlist.playlistName}
+                                    <span className="mb-2 fw-bold">PLAYLIST</span>
+                                    <span className="display-5 mb-2" style={{ fontFamily: "Mochiy Pop P One, sans-serif" }}>{playlist.playlistName}
                                         &nbsp;
                                     </span>
+                                    <div className="text-muted">
+                                        <small>{account.user.name}</small>
+                                        {" ● "}
+                                        <small>{playlist.songs.length}{" "} Songs</small>
+                                    </div>
+
                                 </div>
                             </div>
                             <div className="my-4 mx-4">
@@ -86,7 +93,7 @@ export default function ViewPlaylist(props) {
 
                                 {/* // <span></span> */}
 
-                                <table className="table text-light table-dark table-hover w-75">
+                                <table className="table text-light table-dark table-hover">
 
                                     <thead>
                                         <tr>
@@ -114,7 +121,7 @@ export default function ViewPlaylist(props) {
                                                         </td>
                                                         <td onClick={() => handleOnClick(s)} style={{ width: "400px" }} className="my-2">{s.singerName}</td>
                                                         <td className="d-flex justify-content-center">
-                                                            <i className="fa fa-trash-o text-muted my-2" title="Remove from Playlist" style={{ fontSize: "19px",cursor: "pointer" }} onClick={() => handleRemoveClick(s._id)}></i>
+                                                            <i className="fa fa-trash-o text-muted my-2" title="Remove from Playlist" style={{ fontSize: "19px", cursor: "pointer" }} onClick={() => handleRemoveClick(s._id)}></i>
                                                         </td>
                                                         {/* <td><button className="btn btn-link link-success text-decoration-none p-0 btn shadow-none" onClick={() => handleEditClick(s._id)}>Edit</button></td> */}
 

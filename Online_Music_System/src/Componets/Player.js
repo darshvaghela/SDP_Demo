@@ -52,18 +52,25 @@ export default function Player(props) {
                                 <div className="mx-4">
                                     <img src={song.imageLink} className="rounded" style={{ width: '250px', height: '250px' }} />
                                 </div>
-                                <div className="d-flex flex-column justify-content-center my-4 text-light">
-                                    <span className="display-5 mb-2" style={{ "font-family": "Mochiy Pop P One, sans-serif" }}>{song.songName}</span>
-                                    {
-                                        (song.movieName != "AlbumSong") ?
-                                            <span className="">From "{song.movieName}"</span> : <span></span>
-
-                                    }
-                                    <span className="">{song.singerName}</span>
+                                <div className="d-flex flex-column justify-content-end text-light">
+                                    <span className="mb-2 fw-bold">SINGLE</span>
+                                    <div className="mb-2">
+                                        <span className="display-5 me-2" style={{ fontFamily: "Mochiy Pop P One, sans-serif" }}>{song.songName}</span>
+                                        {
+                                            (song.movieName != "AlbumSong") ?
+                                                `(From "${song.movieName}")` : ""
+                                        }
+                                    </div>
+                                    {/* <span className="">{song.singerName}</span> */}
+                                    <div className="text-muted">
+                                        <small>{song.singerName.split(',').join(' ● ')}</small>
+                                        {" ● "}
+                                        <small>1 Song</small>
+                                    </div>
                                 </div>
                             </div>
 
-                            <table className="table text-light table-dark table-hover mt-4 w-75">
+                            <table className="table text-light table-dark table-hover mt-4">
 
                                 <thead>
                                     <tr>
@@ -74,7 +81,7 @@ export default function Player(props) {
                                 </thead>
                                 <tbody>
 
-                                    <tr className="text-light" style={{height:'50px'}}>
+                                    <tr className="text-light" style={{ height: '50px' }}>
                                         <td style={{ width: "50px" }}>{1}</td>
                                         <td className="" style={{ width: "300px" }} >
                                             <img src={song.imageLink} className="me-3" style={{ width: "35px", height: "35px" }} />

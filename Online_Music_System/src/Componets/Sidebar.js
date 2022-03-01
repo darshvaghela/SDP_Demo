@@ -5,11 +5,11 @@ import Beatzz from '../static/Beatzz.jpg';
 export default function Sidebar(props) {
     const account = JSON.parse(localStorage.getItem("account"))
     const nav = useNavigate();
-    const handleOnClick = () => {
-        if(account){
-            nav('/createplaylist')
+    const handleOnClick = (path) => {
+        if (account) {
+            nav(path)
         }
-        else{
+        else {
             nav('/signin')
         }
     }
@@ -39,22 +39,22 @@ export default function Sidebar(props) {
                             <span>Search</span>
                         </Link>
                     </div>
-                    <div className="mb-4">
-                        <Link to="/yourplaylist" className="text-decoration-none text-light">
+                    <div className="mb-4" onClick={() => handleOnClick('/yourplaylist')}>
+                        <span className="text-decoration-none text-light" style={{cursor: 'pointer'}}>
                             <i className="fa fa-music me-3" style={{ fontSize: "20px", color: "white" }}></i>
                             <span>Your Playlists</span>
-                        </Link>
+                        </span>
                     </div>
                 </div>
                 {props.currentSong &&
                     <div className="align-self-end">
-                        <img src={props.currentSong.imageLink} className="w-100 mt-4" style={{cursor: 'pointer'}} onClick={() => navigateWithId(props.currentSong._id)}/>
+                        <img src={props.currentSong.imageLink} className="w-100 mt-4" style={{ cursor: 'pointer' }} onClick={() => navigateWithId(props.currentSong._id)} />
                         <div className="d-flex justify-content-between mt-2">
                             <div>
                                 <span className="text-light mt-4">{props.currentSong.songName}</span>
                             </div>
                             <div title="Add to Playlist">
-                                <i style={{ fontSize: "22px",color: "white",cursor: "pointer" }} className="fa" onClick={handleOnClick}>&#xf0fe;</i>
+                                <i style={{ fontSize: "22px", color: "white", cursor: "pointer" }} className="fa" onClick={() => handleOnClick('/createplaylist')}>&#xf0fe;</i>
                             </div>
 
                         </div>

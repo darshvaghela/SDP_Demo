@@ -48,3 +48,17 @@
     transform: scale(1.05,1.05);
 }
 
+.search-top{
+    background-color:#2f352f55;
+}
+.search-top:hover{
+    background-color:#00000055;
+    cursor:pointer;
+}
+
+.search-item:hover{
+    background-color:#00000055;
+    cursor:pointer;
+}
+
+
