@@ -29,7 +29,7 @@ export default function Sidebar(props) {
                 <div className="my-3">
                     <div className="mb-3">
                         <Link to="/" className="text-decoration-none text-light">
-                            <i className="fa fa-home me-3 my-2" style={{ fontSize: "20px", color: "white" }}></i>
+                            <i className="fa fa-home me-3" style={{ fontSize: "20px", color: "white" }}></i>
                             <span>Home</span>
                         </Link>
                     </div>
@@ -42,19 +42,19 @@ export default function Sidebar(props) {
                     <div className="mb-4" onClick={() => handleOnClick('/yourplaylist')}>
                         <span className="text-decoration-none text-light" style={{cursor: 'pointer'}}>
                             <i className="fa fa-music me-3" style={{ fontSize: "20px", color: "white" }}></i>
-                            <span>Your Playlists</span>
+                            <span>Your playlists</span>
                         </span>
                     </div>
                 </div>
                 {props.currentSong &&
-                    <div className="align-self-end">
+                    <div>
                         <img src={props.currentSong.imageLink} className="w-100 mt-4" style={{ cursor: 'pointer' }} onClick={() => navigateWithId(props.currentSong._id)} />
-                        <div className="d-flex justify-content-between mt-2">
+                        <div className="d-flex justify-content-between mt-2 align-items-center">
                             <div>
                                 <span className="text-light mt-4">{props.currentSong.songName}</span>
                             </div>
-                            <div title="Add to Playlist">
-                                <i style={{ fontSize: "22px", color: "white", cursor: "pointer" }} className="fa" onClick={() => handleOnClick('/createplaylist')}>&#xf0fe;</i>
+                            <div title="Add to playlist">
+                                <span style={{ fontSize: "25px", color: "white", cursor: "pointer" }} onClick={() => handleOnClick('/createplaylist')}>+</span>
                             </div>
 
                         </div>

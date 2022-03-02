@@ -13,7 +13,7 @@ export default function UserPlaylists(props) {
 
   const [create, setCreate] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
-  const [userPaylists, setUserPlaylists] = useState([]);
+  const [userPlaylists, setUserPlaylists] = useState([]);
 
   const handleOnChange = (event) => {
     setPlaylistName(event.target.value)
@@ -43,21 +43,22 @@ export default function UserPlaylists(props) {
     if (response.success) {
       window.alert(id ? "Song added successfully" : "Playlist Created")
       fetchuserPlaylists()
-      nav('/yourplaylist')
+      nav('/viewplaylist', { state: { playlist: response.playlist } })
     }
-    else{
+    else {
       window.alert(response.error)
     }
   }
   const handleToggle = () => {
     setCreate(true)
   }
-  if(!props.currentSong) 
+  if (!props.currentSong)
     nav('/')
+
   useEffect(() => {
     fetchuserPlaylists();
   }, [])
-  
+
 
   return (
     <>
@@ -69,13 +70,10 @@ export default function UserPlaylists(props) {
           <div className="col-10 offset-2 p-0 h-100 ">
             <Navbar />
             <div className="container text-light" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
-              <div className="my-2">
-                <h2>Create new Playlist</h2>
-                {/* <h4>{props.currentSong._id}</h4> */}
-                <hr />
+              <div className="my-3">
+                <h2 className="mb-3">Create new playlist</h2>
                 {!create ?
                   <div>
-
                     <div className="row row-cols-6 g-4 mb-3">
                       <div className="col">
                         <div className="card h-100 text-light mycard" onClick={handleToggle}>
@@ -89,7 +87,7 @@ export default function UserPlaylists(props) {
                   </div>
                   :
                   <div>
-                    <div className="form-group d-flex align-items-center mx-sm-3 mb-2">
+                    <div className="form-group d-flex align-items-center">
                       <input type="text" className="form-control w-25 me-4" value={playlistName} onChange={handleOnChange} placeholder="Playlist Name" />
                       <button type="submit" className="btn btn-success" onClick={() => handleOnClick()}>Create</button>
                     </div>
@@ -97,21 +95,22 @@ export default function UserPlaylists(props) {
                 }
               </div>
               <div className="my-4">
-                <h2>Your Playlists</h2>
-                <hr />
+                <h2 className="mb-3">Your playlists</h2>
+                {userPlaylists.length == 0 &&
+                  <h5 className="my-4 text-muted">No existing playlists !!</h5>
+                }
                 <div className="row row-cols-6 g-4 mb-3">
-
                   {
-                    userPaylists.map((p, index) => {
+                    userPlaylists.map((p, index) => {
                       return (
                         <div className="col" key={p._id}>
                           <div className="card h-100 text-light mycard" onClick={() => handleOnClick(p._id)}>
                             {p.songs[0] ?
-                            <img src={p.songs[0].imageLink} className="card-img-top" />
-                                        :
-                                        <img src={EmptyPlaylist} className="card-img-top" />
+                              <img src={p.songs[0].imageLink} className="card-img-top" />
+                              :
+                              <img src={EmptyPlaylist} className="card-img-top" />
 
-                                    }
+                            }
                             <div className="card-footer h-25">
                               <p className="card-title" >{p.playlistName}</p>
                             </div>

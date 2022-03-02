@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../Navbar'
 import { BrowserRouter as Router, useNavigate, useLocation, Switch, Route, Link } from 'react-router-dom';
-import '../admin.css'
-
 
 export default function CreatePlaylist() {
     const location = useLocation();
@@ -16,8 +14,6 @@ export default function CreatePlaylist() {
     const [playlistName, setPlaylistName] = useState("")
     
     const [playlist, setPlaylist] = useState(location.state ? location.state.playlist : null)
-    // console.log(location.state.playlist);
-
 
     const fetchSongs = async () => {
         let response = await fetch(`http://localhost:4099/song/fetchallsongs/${"all"}`,

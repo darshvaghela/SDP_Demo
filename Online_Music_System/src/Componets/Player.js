@@ -80,21 +80,20 @@ export default function Player(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <tr className="text-light" style={{ height: '50px' }}>
-                                        <td style={{ width: "50px" }}>{1}</td>
-                                        <td className="" style={{ width: "300px" }} >
+                                        <td className="align-middle" style={{ width: "50px" }}>{1}</td>
+                                        <td className="align-middle" style={{ width: "500px" }} >
                                             <img src={song.imageLink} className="me-3" style={{ width: "35px", height: "35px" }} />
                                             {song.songName}
                                             {
-                                                (song.movieName !== "AlbumSong") ?
-                                                    <span className="my-2">&nbsp;(From "{song.movieName}")</span> : <span></span>
+                                                (song.movieName !== "AlbumSong") &&
+                                                    <span>&nbsp;(From "{song.movieName}")</span> 
 
                                             }
                                         </td>
-                                        <td style={{ width: "400px" }} className="my-2">{song.singerName}</td>
-                                        <td className="d-flex justify-content-center">
-                                            <i style={{ fontSize: "19px", color: "white", cursor: "pointer" }} title="Add to Playlist" className="fa my-2" onClick={handleOnClick}>&#xf0fe;</i>
+                                        <td className="align-middle" style={{ width: "400px" }}>{song.singerName}</td>
+                                        <td className="align-middle text-center">
+                                            <span style={{ fontSize: "25px", color: "white", cursor: "pointer" }} title="Add to playlist" onClick={handleOnClick}>+</span>
                                         </td>
                                     </tr>
 

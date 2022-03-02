@@ -39,12 +39,12 @@ export default function YourPlaylists(props) {
                     </div>
                     <div className="col-10 offset-2 p-0 h-100 ">
                         <Navbar />
-                        <div className="container text-light my-4" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
-
-
-                            <div className="my-2">
-                                <h2>Your Playlists</h2>
-                                <hr />
+                        <div className="container text-light my-3" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
+                            <div className="">
+                                <h2 className="mb-3">Your playlists</h2>
+                                {userPlaylists.length == 0 &&
+                                    <h5 className="my-4 text-muted">No playlists created !!</h5>
+                                }
                                 <div className="row row-cols-6 g-4 mb-3">
                                     {
                                         userPlaylists.map((p, index) => {
@@ -67,11 +67,7 @@ export default function YourPlaylists(props) {
                                         })
                                     }
                                 </div>
-
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,8 @@ export default function ViewPlaylist(props) {
             }
         );
         response = await response.json();
-        nav('/yourplaylist')
+        // setPlaylist(prev => response.playlist);
+        nav("/yourplaylist")
     }
 
     const handleOnClick = (s) => {
@@ -42,7 +43,6 @@ export default function ViewPlaylist(props) {
                 }
             );
             response = await response.json();
-            // fetchPlaylists();
         }
     }
 
@@ -55,8 +55,8 @@ export default function ViewPlaylist(props) {
                     </div>
                     <div className="col-10 offset-2 p-0 h-100 ">
                         <Navbar />
-                        <div className="container my-4 bg-dark" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
-                            <div className="d-flex">
+                        <div className="bg-dark" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
+                            <div className="mt-3 d-flex">
                                 <div className="mx-4">
                                     {playlist.songs[0] ?
                                         <img src={playlist.songs[0].imageLink} className="rounded" style={{ width: '250px', height: '250px' }} />
@@ -79,59 +79,54 @@ export default function ViewPlaylist(props) {
                                 </div>
                             </div>
                             <div className="my-4 mx-4">
-
-
                                 <div className="btn-group dropend">
                                     <button className="btn btn-dark shadow-none" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i className="fa fa-ellipsis-h" style={{ fontSize: "22px", color: "grey", cursor: "pointer" }}></i>
                                     </button>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><Link className="dropdown-item" to="/">Add Song</Link></li>
-                                        <li><Link className="dropdown-item" to="/yourplaylist" onClick={() => handleOnDelete(playlist._id)}>Delete Playlist</Link></li>
+                                        <li><Link className="dropdown-item" to="/">Add song</Link></li>
+                                        <li><Link className="dropdown-item" to="/yourplaylist" onClick={() => handleOnDelete(playlist._id)}>Delete playlist</Link></li>
                                     </ul>
                                 </div>
+                                {playlist.songs.length == 0 &&
+                                    <h5 className="my-4 text-muted">No songs added !!</h5>
+                                }
+                                {playlist.songs.length > 0 &&
+                                    <table className="table text-light table-dark table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>TITLE</th>
+                                                <th>ARTIST</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                playlist.songs.map((s, index) => {
+                                                    return (
+                                                        <tr key={s._id} className={`${props.currentSong && props.currentSong._id == s._id ? "text-light" : "text-muted"}`}>
+                                                            <td className="align-middle" style={{ width: "50px" }} onClick={() => handleOnClick(s)}>{index + 1}</td>
+                                                            <td className="align-middle" onClick={() => handleOnClick(s)} style={{ width: "500px" }} >
+                                                                <img src={s.imageLink} className="me-3" style={{ width: "35px", height: "35px" }} />
+                                                                {s.songName}
+                                                                {
+                                                                    (s.movieName !== "AlbumSong") ?
+                                                                        <span>&nbsp;(From "{s.movieName}")</span> : <span></span>
 
-                                {/* // <span></span> */}
-
-                                <table className="table text-light table-dark table-hover">
-
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>TITLE</th>
-                                            <th>ARTIST</th>
-                                            <th></th>
-                                            {/* <th></th> */}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            playlist.songs.map((s, index) => {
-                                                return (
-                                                    <tr key={s._id} className={`${props.currentSong && props.currentSong._id == s._id ? "text-light" : "text-muted"}`}>
-                                                        <td style={{ width: "50px" }} onClick={() => handleOnClick(s)}>{index + 1}</td>
-                                                        <td onClick={() => handleOnClick(s)} className="" style={{ width: "300px" }} >
-                                                            <img src={s.imageLink} className="me-3" style={{ width: "35px", height: "35px" }} />
-                                                            {s.songName}
-                                                            {
-                                                                (s.movieName !== "AlbumSong") ?
-                                                                    <span className="my-2">&nbsp;(From "{s.movieName}")</span> : <span></span>
-
-                                                            }
-                                                        </td>
-                                                        <td onClick={() => handleOnClick(s)} style={{ width: "400px" }} className="my-2">{s.singerName}</td>
-                                                        <td className="d-flex justify-content-center">
-                                                            <i className="fa fa-trash-o text-muted my-2" title="Remove from Playlist" style={{ fontSize: "19px", cursor: "pointer" }} onClick={() => handleRemoveClick(s._id)}></i>
-                                                        </td>
-                                                        {/* <td><button className="btn btn-link link-success text-decoration-none p-0 btn shadow-none" onClick={() => handleEditClick(s._id)}>Edit</button></td> */}
-
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-
+                                                                }
+                                                            </td>
+                                                            <td className="align-middle" onClick={() => handleOnClick(s)} style={{ width: "400px" }}>{s.singerName}</td>
+                                                            <td className="align-middle text-center">
+                                                                <i className="fa fa-trash-o text-muted" title="Remove from playlist" style={{ fontSize: "19px", cursor: "pointer" }} onClick={() => handleRemoveClick(s._id)}></i>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
                             </div>
                         </div>
                     </div>

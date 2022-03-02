@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.post('/createplaylistbyadmin', authenticateuser, async (req, res) => {
     try {
-        let playlist = await AdminPlaylist.create({ playlistName: req.body.playlistName, user: req.user.id, songs: req.body.selectedSongs });
+        await AdminPlaylist.create({ playlistName: req.body.playlistName, user: req.user.id, songs: req.body.selectedSongs });
         res.send({ success: true })
     }
     catch (error) {
@@ -24,16 +24,18 @@ router.post('/createplaylistbyuser', authenticateuser, async (req, res) => {
             let song = playlist.songs.find(s => s == req.body.songId)
 
             if(song) {
-                res.send({success: false,error:"Song already exists in playlist!!"})
+                res.send({success: false, error:"Song already exists in playlist!!"})
             }
             else{
                 await UserPlaylist.updateOne({ _id: req.body.playlistId }, {$push:{ songs: req.body.songId }})
-                res.send({ success: true })
+                playlist = await UserPlaylist.findOne({_id : req.body.playlistId}).populate('songs')
+                res.send({ success: true , playlist })
             }
         }
         else {
             let playlist = await UserPlaylist.create({ playlistName: req.body.playlistName, user: req.user.id, songs: [req.body.songId] });
-            res.send({ success: true })
+            playlist = await UserPlaylist.findOne({_id : playlist._id}).populate('songs')
+            res.send({ success: true, playlist })
         }
     }
     catch (error) {
@@ -97,7 +99,7 @@ router.delete('/deleteuserplaylist', async (req, res) => {
 router.post('/removesong', async (req, res) => {
     try{
         await UserPlaylist.updateOne({_id:req.body.playlistId},{$pull:{songs: req.body.songId}})
-        let playlist = await UserPlaylist.find({_id:req.body.playlistId})
+        let playlist = await UserPlaylist.findOne({_id:req.body.playlistId}).populate('songs')
         res.send({ success: true, playlist})
     }
     catch{
