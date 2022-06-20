@@ -7,7 +7,7 @@ export default function CreatePlaylist() {
     const nav = useNavigate();
     const account = JSON.parse(localStorage.getItem("account"))
     
-    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hop and Rap"];
     const [songsByGenre, setSongsByGenre] = useState(new Map())
     
     const [selectedSongs, setSelectedSongs] = useState([])
@@ -103,7 +103,7 @@ export default function CreatePlaylist() {
         <>
             <Navbar />
             <div className="container my-4">
-                <h2> {playlist ? 'Edit Playlist' : 'Create Playlist'}</h2>
+                <h2> {playlist ? 'Edit playlist' : 'Create playlist'}</h2>
                 <hr className="text-primary" />
                 <div className="mb-3 d-flex align-items-center my-4">
                     <label htmlFor="playlist-name" className="fw-bold me-4">Playlist Name</label>

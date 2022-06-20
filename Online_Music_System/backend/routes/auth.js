@@ -74,7 +74,8 @@ router.post('/resetpassword', [
     }
 
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user
+         = await User.findOne({ email: req.body.email });
         if (!user) {
             return res.status(400).json({ error: "Email Not Found", success: false })
         }

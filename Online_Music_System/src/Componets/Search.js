@@ -10,7 +10,7 @@ export default function Search(props) {
   const [query, setQuery] = useState("")
   const [searchResult, setSearchResult] = useState([])
   const [songsByGenre, setSongsByGenre] = useState(new Map())
-  const genres = ["Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+  const genres = ["Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hop and Rap"];
   const [colors, setColors] = useState([])
   const fetchSongs = async () => {
     let response = await fetch(`http://localhost:4099/song/fetchallsongs/${"all"}`,
@@ -57,6 +57,7 @@ export default function Search(props) {
           return false
       });
     })
+    
   }
   const generateColors = () => {
     let i = 0;
@@ -83,7 +84,7 @@ export default function Search(props) {
         </div>
         <div className="col-10 p-0 offset-2 h-100">
           <Navbar search={<input onChange={handleSearch} value={query} className="form-control ms-2 h-75 my-auto rounded-pill" type="text" placeholder="Search" style={{ width: "500px" }} />} />
-          <div style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }} >
+          <div className="scrollbar-color" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }} >
             <div className="container">
               {(searchResult.length == 0 && query != 0) &&
                 <h5 className="my-4 text-muted">
@@ -110,7 +111,7 @@ export default function Search(props) {
                   </div>
                   <div className="col-8">
                     <h3 className="my-3 text-light">Songs</h3>
-                    <div className="text-light d-flex flex-column" style={{ height: '215px', overflowY: 'auto' }}>
+                    <div className="text-light d-flex flex-column scrollbar-color" style={{ height: '215px', overflowY: 'auto'}}>
                       {searchResult.map(s =>
                         <div className="d-flex align-items-center py-1 px-2 search-item" onClick={() => navigateWithId(s._id)}>
                           <img src={s.imageLink} className="me-2" style={{ width: "40px", height: "40px" }} />

@@ -5,7 +5,7 @@ export default function Songs() {
     const nav = useNavigate();
     const [songsByGenre, setSongsByGenre] = useState(new Map())
     const [songs,setSongs] = useState([])
-    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hop and Rap"];
     const fetchSongs = async () => {
         let response = await fetch(`http://localhost:4099/song/fetchallsongs/${"all"}`,
             {
@@ -25,12 +25,12 @@ export default function Songs() {
                 for (let j = 0; j < response.songs.length; j++) {
                     if (response.songs[j].genre == genres[i]) {
                         t.push(response.songs[j])
-
                     }
                 }
                 temp.set(genres[i], t);
             }
             setSongsByGenre(temp)
+            console.log(temp)
         }
         return response;
     }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation,
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import addtoplaylist from '../static/addtoplaylist-icon.jpg';
+// import Equalizer from '../static/Equalizer.mp4'
 
 import './custom.css';
 import 'react-h5-audio-player/lib/styles.css';
@@ -75,6 +76,7 @@ export default function Player(props) {
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        {/* <th></th> */}
                                         <th>TITLE</th>
                                         <th>ARTIST</th>
                                     </tr>
@@ -82,6 +84,11 @@ export default function Player(props) {
                                 <tbody>
                                     <tr className="text-light" style={{ height: '50px' }}>
                                         <td className="align-middle" style={{ width: "50px" }}>{1}</td>
+                                        {/* <td className="align-middle ">
+                                            <video style={{ width: "35px", height: "35px" }} autoPlay loop>
+                                                <source src={Equalizer} type="video/mp4"/>
+                                            </video>
+                                        </td> */}
                                         <td className="align-middle" style={{ width: "500px" }} >
                                             <img src={song.imageLink} className="me-3" style={{ width: "35px", height: "35px" }} />
                                             {song.songName}

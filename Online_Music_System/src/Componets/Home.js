@@ -8,7 +8,7 @@ export default function Home(props) {
     const nav = useNavigate();
     const account = JSON.parse(localStorage.getItem("account"))
     const [songsByGenre, setSongsByGenre] = useState(new Map())
-    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const genres = ["Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hop and Rap"];
 
     const [playlists, setPlaylists] = useState([])
 
@@ -80,7 +80,7 @@ export default function Home(props) {
                     <div className="col-10 p-0 offset-2 h-100">
                         <Navbar />
                         {/* Admin side playlist */}
-                        <div style={props.currentSong ? {height : '81vh', overflow : 'auto'} : {height : '92.48vh', overflow: 'auto'}} >
+                        <div className="scrollbar-color" style={props.currentSong ? {height : '81vh', overflow : 'auto'} : {height : '92.48vh', overflow: 'auto'}} >
                             {
                                 playlists.map(p => {
                                     return (

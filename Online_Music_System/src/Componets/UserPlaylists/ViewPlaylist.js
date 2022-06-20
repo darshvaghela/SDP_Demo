@@ -55,7 +55,7 @@ export default function ViewPlaylist(props) {
                     </div>
                     <div className="col-10 offset-2 p-0 h-100 ">
                         <Navbar />
-                        <div className="bg-dark" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
+                        <div className="bg-dark scrollbar-color" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
                             <div className="mt-3 d-flex">
                                 <div className="mx-4">
                                     {playlist.songs[0] ?

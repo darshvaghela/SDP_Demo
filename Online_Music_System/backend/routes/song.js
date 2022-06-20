@@ -6,18 +6,8 @@ const router = express.Router()
 
 
 router.post('/addsong',authenticateuser, async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ success: false, error: errors.array() });
-    // }
-
-
     try {
-        let song = await Song.findOne({ songName: req.body.songName });
-        if (song) {
-            return res.status(400).json({ error: "Song already exists", success: false })
-        }
-        song = await Song.create({ songName: req.body.songName, movieName: req.body.movieName, singerName: req.body.singerName, songLink: req.body.songLink, imageLink: req.body.imageLink, genre: req.body.genre });
+       let song = await Song.create({ songName: req.body.songName, movieName: req.body.movieName, singerName: req.body.singerName, songLink: req.body.songLink, imageLink: req.body.imageLink, genre: req.body.genre });
         res.send({ success: true })
     }
     catch (error) {

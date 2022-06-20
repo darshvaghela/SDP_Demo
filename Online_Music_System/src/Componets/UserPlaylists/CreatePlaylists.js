@@ -69,7 +69,7 @@ export default function UserPlaylists(props) {
           </div>
           <div className="col-10 offset-2 p-0 h-100 ">
             <Navbar />
-            <div className="container text-light" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
+            <div className="container text-light scrollbar-color" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
               <div className="my-3">
                 <h2 className="mb-3">Create new playlist</h2>
                 {!create ?

@@ -11,7 +11,7 @@ export default function AddSong() {
     const [songurl, setSongurl] = useState("");
     const [imageurl, setImageurl] = useState("");
     const [data, setData] = useState({ songName: "", movieName: "", singerName: "", songLink: "", imageLink:"", genre: "" });
-    const genres = ["","Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const genres = ["","Punjabi", "Bollywood", "Romance", "Indian-classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hop and Rap"];
     const [songprogress, setSongprogress] = useState(0)
     const [imageprogress, setImageprogress] = useState(0)
     const songUpload = () => {
@@ -109,7 +109,7 @@ export default function AddSong() {
         <div>
             <Navbar />
             <div className="container my-4" >
-                <h2>Add Song</h2>
+                <h2>Add song</h2>
                 <hr />
 
 
@@ -181,7 +181,7 @@ export default function AddSong() {
                 </div>
 
 
-                <Link to="/managesong" >
+                <Link to="/admin/songs" >
                     <button type="button" className="btn btn-success  mb-4 mx-auto" onClick={addSong}>Add</button>
                 </Link>
             </div>

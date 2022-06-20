@@ -60,5 +60,10 @@
     background-color:#00000055;
     cursor:pointer;
 }
-
+  .scrollbar-color::-webkit-scrollbar {
+    width: 10px;
+  }
+  .scrollbar-color::-webkit-scrollbar-thumb {
+    background-color:rgb(68, 68, 68);
+  }
 

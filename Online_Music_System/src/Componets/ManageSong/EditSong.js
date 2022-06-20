@@ -8,7 +8,7 @@ export default function EditSong() {
     const location = useLocation();
     const nav = useNavigate();
 
-    const genres = ["", "Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hope and Rap"];
+    const genres = ["", "Punjabi", "Bollywood", "Romance", "Indian-Classical", "Holiday", "Netflix", "Party", "Instrumental", "Workout", "Rock", "Jazz", "Pop", "Hip-Hop and Rap"];
     const id = location.state.id;
     const [song, setSong] = useState({ id: "", songName: "", movieName: "", singerName: "", genre: "" })
 
@@ -59,7 +59,7 @@ export default function EditSong() {
         <div>
             <Navbar />
             <div className="container my-4" >
-                <h2>Edit Song</h2>
+                <h2>Edit song</h2>
                 <hr />
                 {/* <h1>{song.genre}</h1> */}
                 <div className="mb-3 row my-4">

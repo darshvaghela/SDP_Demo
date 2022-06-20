@@ -3,6 +3,8 @@ import { BrowserRouter as Router, useNavigate, Switch, Route, Link, useLocation,
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar'
 import EmptyPlaylist from '../../static/empty-playlist.jpg'
+import '../custom.css'
+
 
 export default function YourPlaylists(props) {
     const nav = useNavigate();
@@ -37,11 +39,11 @@ export default function YourPlaylists(props) {
                         <Sidebar currentSong={props.currentSong} />
 
                     </div>
-                    <div className="col-10 offset-2 p-0 h-100 ">
+                    <div className="col-10 offset-2 p-0 h-100">
                         <Navbar />
-                        <div className="container text-light my-3" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
-                            <div className="">
-                                <h2 className="mb-3">Your playlists</h2>
+                        <div className="container text-light scrollbar-color" style={props.currentSong ? { height: '81vh', overflow: 'auto' } : { height: '92.48vh', overflow: 'auto' }}>
+                            <div>
+                                <h2 className="my-3">Your playlists</h2>
                                 {userPlaylists.length == 0 &&
                                     <h5 className="my-4 text-muted">No playlists created !!</h5>
                                 }
